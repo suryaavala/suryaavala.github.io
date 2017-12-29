@@ -1,88 +1,142 @@
-- name: "Product Architect"
-  place: "Orion Health"
-  website: "http://www.orionhealth.com"
+- name: "Artificial Intelligence Engineer"
+  place: "Nod."
+  website: "https://nod.money"
   icon: 'icon-embed2'
   title: 'Work'
-  date: 'Aug 2016 - Present'
+  date: 'Dec 2017 - Present'
   desc: >
-          Redefining the architecture for the next 5 years.
-          <br />Web/Mobile development and DevOps.
-          <br />AWS, JS, NodeJS, React, React-Native, Docker, GraphQL
-- name: 'Solutions Architect'
-  place: 'Bauer Media'
-  website: 'http://www.bauermedia.com'
+          Developing AI for Financial Advisors.
+          <br />AI development, BackEnd and DevOps.
+          <br />Python, Tensorflow, AWS, Docker, PostgreSQL
+- name: 'Machine Learning Engineer'
+  place: 'iungo'
+  website: 'http://iungo.com.au'
   icon: 'icon-embed2'
   title: 'Work'
-  date: 'Jul 2015 - Aug 2016'
+  date: 'Apr 2017 - Nov 2017'
   desc: >
-          Driving digital transformation.
-          <br />Web development and DevOps.
-          <br />C#, AWS, JS, ElasticSearch, NodeJS, React, PGSQL, Docker, Falcor
-- name: "Technical Lead"
-  place: "Findly"
-  website: "http://wwww.findly.com"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Jun 2014 - Jul 2015'
-  desc: >
-          Helping Fortune 500 companies find their next employees.
-          <br />Web development and DevOps.
-          <br />C#, AWS, Mongo, JS, ES, NodeJS, Angular, Backbone, PGSQL
-- name: "Sr Software Developer"
-  place: "MYOB"
-  website: "http://www.myob.com"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Sep 2013 - Jun 2014'
-  desc: >
-          Developing next generation of accounting software.
-          <br />Web and desktop development.
-          <br />C#, WPF, MSSQL, AWS, JS
-- name: "Sr Software Developer"
-  place: "MYOB BankLink"
-  website: "http://www.banklink.co.nz"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Nov 2012 - Sep 2013'
-  desc: >
-          Developing next generation of accounting software.
-          <br />Web and desktop development.
-          <br />C#, WPF, MSSQL, JS
-- name: "Lead Developer - Grant Project"
-  place: "MSI"
-  website: "http://www.mbie.govt.nz"
-  icon: 'icon-search'
-  title: 'Research'
-  date: 'Apr 2011 - Dec 2011'
-  desc: >
-          Successful 'Foundation for Research, Science & Technology' grant.
-          <br />New multi touch hardware and concurrent collaborative software.
-          <br />C#, WPF, Silverlight, OpenCV
-- name: "Sr Software Developer"
-  place: "2Touch"
-  website: "http://twotouch.com"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Mar 2009 - Nov 2012'
-  desc: >
-          Pioneering large multi touch surfaces.
-          <br />Web, desktop and hardware development.
-          <br />C#, WPF, PHP, MySQL, RoR, JS
+          Developed Maching Learning models to gain insights from Connected car data.
+          <br />Machine Learning and DevOps.
+          <br />Python, Tensorflow, scikit-learn, numpy, pandas, PostgreSQL, AWS
 - name: "Software Developer"
-  place: "Tec-Lab"
-  website: "//:0"
+  place: "Hoosh Marketing"
+  website: "http://hooshmarketing.com"
   icon: 'icon-embed2'
   title: 'Work'
-  date: 'Apr 2006 – Mar 2009'
+  date: 'Oct 2016 - May 2017'
   desc: >
-          Building first touch capable terminal kiosks.
-          <br />Web and desktop development.
-          <br />C#, WPF, PHP, MySQL, AS3, JS
-- name: "Master's Degree, Mathematics"
-  place: "UBA"
-  website: "http://www.uba.ar/"
+          Developed Software products for Marketing Automation.
+          <br />Software development and DevOps.
+          <br />Python, REST-API, PHP, bash, Perl, PGSQL
+- name: "Teaching Assistant"
+  place: "Code Camp"
+  website: "https://codecamp.com.au"
+  icon: 'icon-embed2'
+  title: 'Work'
+  date: 'Apr 2016 - Oct 2016'
+  desc: >
+          Taught coding to the next generation of Computer Scientists a.k.a kids.
+          <br />Web, desktop and game development.
+          <br />Scratch
+- name: "Master's Degree, Artificial Intelligence & Data Science"
+  place: "UNSW"
+  website: "https://www.unsw.edu.au"
   icon: 'icon-book'
   title: 'Education'
-  date: 'Jul. 2008'
+  date: 'Feb 2016 - Jul 2018 (expected)'
   desc: >
-          Graduated with a focus on applied math and cryptography.
+          With a focus on Machine Learning, AI & Data Science.
+- name: "System Analyst"
+  place: "SWIFT"
+  website: "https://www.swift.com"
+  icon: 'icon-embed2'
+  title: 'Work'
+  date: 'Aug 2014 - Feb 2016'
+  desc: >
+          Supported, maintained and improved the world's largest financial communications provider.
+          <br />BackEnd and DevOps.
+          <br />Python, OracleSQL, HP-unix, zsh, Perl
+- name: "B.Eng., Mechatronic Engineering"
+  place: "CityU of Hong Kong"
+  website: "https://www.cityu.edu.hk"
+  icon: 'icon-book'
+  title: 'Education'
+  date: 'Aug 2011 - Jul 2014'
+  desc: >
+          Graduated with an Honours in Mechatronic Engineering/Robotics & minor in Computer Science.
+- name: "Co-Founder & CTO"
+  place: "Satinos"
+  website: "https://www.linkedin.com/company/3123885"
+  icon: 'icon-embed2'
+  title: 'Work'
+  date: 'Sep 2011 - Jul 2014'
+  desc: >
+          Successfully founded an Open-Source, EdTech and Web development company to help local businesses realise their dreams.
+          <br /> Open Source, Linux Support, Web Development, Software Development & Contented Management
+- name: "Research Assistant"
+  place: "CityU"
+  website: "http://www.cityu.edu.hk"
+  icon: 'icon-search'
+  title: 'Research'
+  date: 'Feb 2014 - Jun 2014'
+  desc: >
+          Developed an digital drawing software that can interface with Hardware.
+          <br />Smart Materials in Pervasive Media.
+          <br />Processing, Arduino, Action Script, Java, C++, Hardware Hacking
+- name: "Software Developer Intern"
+  place: "HSBC"
+  website: "https://www.hsbc.com.hk"
+  icon: 'icon-embed2'
+  title: 'Work'
+  date: 'Aug 2013 - Aug 2013'
+  desc: >
+          Developed Mobile banking applications on Android & iOS.
+          <br />Mobile App development.
+          <br />Java, Objective C, jQuery
+- name: "Research Intern"
+  place: "Simon Fraser University"
+  website: "https://www.sfu.ca"
+  icon: 'icon-search'
+  title: 'Research'
+  date: 'May 2013 – Aug 2013'
+  desc: >
+          Investigated the feasibility of Plasma Ions in Gyroscopes.
+          <br />Research & Electronic Engineering.
+          <br />Electronics, Microprocessor programming
+- name: "Research Assistant"
+  place: "CityU"
+  website: "http://www.cityu.edu.hk"
+  icon: 'icon-search'
+  title: 'Research'
+  date: 'Feb 2012 - Aug 2012'
+  desc: >
+          Researched the use of Nano particles in Solar Cells.
+          <br />Chemical & Electronic Engineering.
+#TODO icon change
+- name: "Production Apprentice"
+  place: "Proton Industries"
+  website: "#"
+  icon: 'icon-embed2'
+  title: 'Work'
+  date: 'Jun 2009 - May 2011'
+  desc: >
+          Production Apprentice in a Salt Manufacturing factory.
+          <br />Salt Production.
+          <br />Solar salt production, refining & preservation
+- name: "High School Certificate, Mathematics"
+  place: "Nalanda College"
+  website: "www.ndc.edu.in/"
+  icon: 'icon-book'
+  title: 'Education'
+  date: 'Jul 2009'
+  desc: >
+          Graduated with a focus on Mathematics, Physics and Chemistry.
+- name: "ICSE, Mathematics & Sciences"
+  place: "Vikasa Vidya Vanam"
+  website: "http://vivivanam.weebly.com"
+  icon: 'icon-book'
+  title: 'Education'
+  date: 'Jul 2007'
+  desc: >
+          Indian Certificate of Secondary Education.
+          <br />Graduated with a focus on Mathematics & Sciences.
