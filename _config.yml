@@ -1,0 +1,48 @@
+# Website settings
+title: "Lucas Schejtman"
+description: "Lucas Schejtman's personal website."
+keywords: "Lucas,Schejtman,personal,portfolio"
+baseurl: "/"
+url: "http://lucasschejtman.github.io"
+favicon: "static/img/favicon.ico?v=2"
+
+author:
+  name: 'Lucas Schejtman'
+  email: 'lucas.schejtman@gmail.com'
+  github: 'https://github.com/lucasschejtman'
+  linkedin: 'https://www.linkedin.com/in/lucas-schejtman-29300b32'
+  head_img: 'static/img/landing/lucas.jpg'
+  tag: 'Mathematics, Software, Sports and Video Games'
+  desc: >
+            Applied math enthusiast, especially cryptography and functional programming, with over 13 years experience in the software industry.
+            <br />As a full stack developer and architect, I'm always up for a challenge at any front.
+            <br />I enjoy keeping myself up to date and playing with the latest and greatest.
+
+stylesheets:
+  - url: "lib/css/bootstrap.min.css"
+  - url: "lib/css/animate.min.css"
+  - url: "static/css/style.min.css"
+
+scripts:
+  - url: "lib/js/jquery.min.js"
+  - url: "lib/js/wow.min.js"
+  - url: "lib/js/pace.min.js"
+  - url: "lib/js/bootstrap.min.js"
+
+sections:
+  - id: "about"
+    name: "About"
+    tpl: "about.html"
+  - id: "career"
+    name: "Career"
+    tpl: "timeline.html"
+  - id: "projects"
+    name: "Projects"
+    tpl: "projects.html"
+
+# google analytics
+ga:
+  id: UA-84338948-1
+
+# Build settings
+encoding: "utf-8"
