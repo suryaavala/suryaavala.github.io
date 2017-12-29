@@ -1,22 +1,24 @@
 # Website settings
-title: "Lucas Schejtman"
-description: "Lucas Schejtman's personal website."
-keywords: "Lucas,Schejtman,personal,portfolio"
-baseurl: "/"
-url: "http://lucasschejtman.github.io"
-favicon: "static/img/favicon.ico?v=2"
+title: "Surya Avala"
+description: "Surya Avala's personal website."
+keywords: "Surya,Avala,personal,portfolio"
+baseurl: ""
+url: "https://suryaavala.com"
+favicon: "static/img/favicon.ico"
 
 author:
-  name: 'Lucas Schejtman'
-  email: 'lucas.schejtman@gmail.com'
-  github: 'https://github.com/lucasschejtman'
-  linkedin: 'https://www.linkedin.com/in/lucas-schejtman-29300b32'
-  head_img: 'static/img/landing/lucas.jpg'
-  tag: 'Mathematics, Software, Sports and Video Games'
+  name: 'Surya Avala'
+  email: 'suryaavala.dev@gmail.com'
+  github: 'https://github.com/suryaavala'
+  linkedin: 'https://www.linkedin.com/in/suryaavala/'
+  #TODO insta,twitter: 'https://www.twitter.com/suryaavala'
+  head_img: 'static/img/landing/surya.png'
+  tag: 'Machine Learning, Artificial Intelligence, Software, Computer Science, UNSW'
   desc: >
-            Applied math enthusiast, especially cryptography and functional programming, with over 13 years experience in the software industry.
-            <br />As a full stack developer and architect, I'm always up for a challenge at any front.
-            <br />I enjoy keeping myself up to date and playing with the latest and greatest.
+            <br /><strong>AI/Machine Learning Engineer</strong> with a background in Mechatronic Engineering and Software Development (enterprise & web).
+            <br /><br />I have always been passionate about Computers and the ability to make them solve problems for us. I value encountering challenging situations, enjoy analyzing & solving problems and seeing the results. The work done by computers tend to have these characteristics in abundance. I am fascinated by that and want to solve as many problems as I can. Code is a by product of this phenomenon.
+            <br /><br />Over time, I have acquired technical skills to code in Python, C, C++, Perl and few other languages. But again, I value the solving problems more than the tools used for that purpose.
+            <br /><br />Strong believer in 👉🏾 <a target="_blank" href="https://medium.com/@Synced/artificial-intelligence-is-the-new-electricity-andrew-ng-cc132ea6264">"AI is the new Electricity"</a>.
 
 stylesheets:
   - url: "lib/css/bootstrap.min.css"
