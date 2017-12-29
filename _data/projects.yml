@@ -1,56 +1,62 @@
-# IMDB GraphQL
-- name: 'IMDB GraphQL'
-  url: 'https://github.com/lucasschejtman/imdb-graphql-flow'
-  img: 'static/img/landing/graphql.png'
-  desc: >
-          A GraphQL wrapper for some of the unofficial IMDB APIs.
-          <br /><strong>JS, Ramda, FlowType</strong>
-
-# VSCode Plugin
-- name: 'VSCode Typesearch'
-  url: 'https://github.com/lucasschejtman/vscode-typesearch'
-  img: 'static/img/landing/vscode.png'
-  desc: >
-          VSCode extension for searching and installing typescript types
-          <br /><strong>Typescript</strong>
-
-# FSharp Ulid
-- name: 'FSharp Ulid'
-  url: 'https://github.com/lucasschejtman/FSharp.Ulid'
-  img: 'static/img/landing/fsharp.png'
-  desc: >
-          Universally Unique Lexicographically Sortable Identifier port
-          <br /><strong>F#, .NET Core, Expecto</strong>
-
-# Online problems
-- name: 'Online Problems'
-  url: 'https://github.com/lucasschejtman/online-problems'
-  img: 'static/img/landing/haskell.png'
-  desc: >
-          My solutions to problems from sites such as; Project Euler, HackerRank and more.
-          <br /><strong>Haskell</strong>
-
-# Functional React
-- name: 'Functional React'
-  url: 'https://github.com/lucasschejtman/react-redux-functional'
+# # IMDB GraphQL
+# - name: 'IMDB GraphQL'
+#   url: 'https://github.com/lucasschejtman/imdb-graphql-flow'
+#   img: 'static/img/landing/graphql.png'
+#   desc: >
+#           A GraphQL wrapper for some of the unofficial IMDB APIs.
+#           <br /><strong>JS, Ramda, FlowType</strong>
+#
+# # VSCode Plugin
+# - name: 'VSCode Typesearch'
+#   url: 'https://github.com/lucasschejtman/vscode-typesearch'
+#   img: 'static/img/landing/vscode.png'
+#   desc: >
+#           VSCode extension for searching and installing typescript types
+#           <br /><strong>Typescript</strong>
+#
+# # FSharp Ulid
+# - name: 'FSharp Ulid'
+#   url: 'https://github.com/lucasschejtman/FSharp.Ulid'
+#   img: 'static/img/landing/fsharp.png'
+#   desc: >
+#           Universally Unique Lexicographically Sortable Identifier port
+#           <br /><strong>F#, .NET Core, Expecto</strong>
+#
+# # Online problems
+# - name: 'Online Problems'
+#   url: 'https://github.com/lucasschejtman/online-problems'
+#   img: 'static/img/landing/haskell.png'
+#   desc: >
+#           My solutions to problems from sites such as; Project Euler, HackerRank and more.
+#           <br /><strong>Haskell</strong>
+#
+# # Functional React
+# - name: 'Functional React'
+#   url: 'https://github.com/lucasschejtman/react-redux-functional'
+#   img: 'static/img/landing/react.png'
+#   desc: >
+#           A functional and modular approach to the well known todo app.
+#           <br /><strong>JS, React, Redux, Ramda</strong>
+#
+# # Jalpc Template
+# - name: 'Jalpc'
+#   url: 'https://github.com/Jack614/jalpc_jekyll_theme/graphs/contributors'
+#   img: 'static/img/landing/jekyll.png'
+#   desc: >
+#           The Jekyll theme on which this website is built.
+#           <br /><strong>JS, Liquid Templates</strong>
+#
+# # Meetup Globe
+# - name: 'Meetup Globe'
+#   url: 'https://github.com/lucasschejtman/meetup-globe'
+#   img: 'static/img/landing/meetup.png'
+#   desc: >
+#           Chrome Experiment for Meetup's members distribution worldwide.
+#           <br /><a href="/e/meetup-globe/">Demo</a>
+#           <br /><strong>JS, WebGL</strong>
+- name: 'Updates Soon...'
+  url: 'https://github.com/lucasschejtman/meetup-globe'
   img: 'static/img/landing/react.png'
   desc: >
-          A functional and modular approach to the well known todo app.
-          <br /><strong>JS, React, Redux, Ramda</strong>
-
-# Jalpc Template
-- name: 'Jalpc'
-  url: 'https://github.com/Jack614/jalpc_jekyll_theme/graphs/contributors'
-  img: 'static/img/landing/jekyll.png'
-  desc: >
-          The Jekyll theme on which this website is built.
-          <br /><strong>JS, Liquid Templates</strong>
-
-# Meetup Globe
-- name: 'Meetup Globe'
-  url: 'https://github.com/lucasschejtman/meetup-globe'
-  img: 'static/img/landing/meetup.png'
-  desc: >
-          Chrome Experiment for Meetup's members distribution worldwide.
-          <br /><a href="/e/meetup-globe/">Demo</a>
-          <br /><strong>JS, WebGL</strong>
+        Upadting the projects here soon.
+        <br /> Meanwhile, feel free to stalk me @Github 🤓.
