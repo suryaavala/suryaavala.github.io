@@ -634,12 +634,3 @@ a:focus {
 .icon-linkedin2:before {
   content: "\eaca";
 }
-
-#code {
-    /* position:relative; */
-    padding-right: 10%;
-    padding-left: 10%;
-    padding-top: 10%;
-    padding-bottom: 10%;
-    
-}
