@@ -1,142 +1,154 @@
-- name: "Artificial Intelligence Engineer"
+- name: "Machine Learning Engineer"
+  place: "Eliiza"
+  website: "https://eliiza.com.au/"
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Sep 2019 - Present"
+  desc: >
+    Full Stack Data Science
+    <br />> Data Engineering, Modelling, ML Engineering, BackEnd, MLOps and DevOps.
+    <br />> Python, R, Spacy, Pandas, Numpy, Scikit Learn, Tensorflow, Keras, Flask, Dask
+    <br />> Docker, Kubernetes, Helm, Kops, Bash, CI/CD, Testing
+    <br />> AWS, GCP, Sagemaker, AI Platform, API Gateway, MLEngine
+- name: "Machine Learning Engineer"
   place: "Nod."
   website: "https://nod.money"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Dec 2017 - Present'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Dec 2017 - Aug 2019"
   desc: >
-          Developing AI for Financial Advisors.
-          <br />AI development, BackEnd and DevOps.
-          <br />Python, Tensorflow, AWS, Docker, PostgreSQL
-- name: 'Machine Learning Engineer'
-  place: 'iungo'
-  website: 'http://iungo.com.au'
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Apr 2017 - Nov 2017'
+    End to End ML Engineer -> prototyping to productionising.
+    <br />ML Engineering, BackEnd and DevOps.
+    <br />Python, Spacy, Pandas, Numpy, Scikit Learn, Tensorflow, Keras, Flask, SQL, Kubernetes, Docker, Kafka, Elastic Search, Kibana, Stanford Nlp, etc...
+- name: "Machine Learning Engineer"
+  place: "iungo"
+  website: "http://iungo.com.au"
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Apr 2017 - Nov 2017"
   desc: >
-          Developed Maching Learning models to gain insights from Connected car data.
-          <br />Machine Learning and DevOps.
-          <br />Python, Tensorflow, scikit-learn, numpy, pandas, PostgreSQL, AWS
+    Developed Maching Learning models to gain insights from Connected car data.
+    <br />Machine Learning and DevOps.
+    <br />Python, Tensorflow, scikit-learn, numpy, pandas, PostgreSQL, AWS
 - name: "Software Developer"
   place: "Hoosh Marketing"
   website: "http://hooshmarketing.com"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Oct 2016 - May 2017'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Oct 2016 - May 2017"
   desc: >
-          Developed Software products for Marketing Automation.
-          <br />Software development and DevOps.
-          <br />Python, REST-API, PHP, bash, Perl, PGSQL
+    Developed Software products for Marketing Automation.
+    <br />Software development and DevOps.
+    <br />Python, REST-API, PHP, bash, Perl, PGSQL
 - name: "Teaching Assistant"
   place: "Code Camp"
   website: "https://codecamp.com.au"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Apr 2016 - Oct 2016'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Apr 2016 - Oct 2016"
   desc: >
-          Taught coding to the next generation of Computer Scientists a.k.a kids.
-          <br />Web, desktop and game development.
-          <br />Scratch
+    Taught coding to the next generation of Computer Scientists a.k.a kids.
+    <br />Web, desktop and game development.
+    <br />Scratch
 - name: "Master's Degree, Artificial Intelligence & Data Science"
   place: "UNSW"
   website: "https://www.unsw.edu.au"
-  icon: 'icon-book'
-  title: 'Education'
-  date: 'Feb 2016 - Jul 2018 (expected)'
+  icon: "icon-book"
+  title: "Education"
+  date: "Feb 2016 - Jul 2018 (expected)"
   desc: >
-          With a focus on Machine Learning, AI & Data Science.
+    With a focus on Machine Learning, AI & Data Science.
 - name: "System Analyst"
   place: "SWIFT"
   website: "https://www.swift.com"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Aug 2014 - Feb 2016'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Aug 2014 - Feb 2016"
   desc: >
-          Supported, maintained and improved the world's largest financial communications provider.
-          <br />BackEnd and DevOps.
-          <br />Python, OracleSQL, HP-unix, zsh, Perl
+    Supported, maintained and improved the world's largest financial communications provider.
+    <br />BackEnd and DevOps.
+    <br />Python, OracleSQL, HP-unix, zsh, Perl
 - name: "B.Eng., Mechatronic Engineering"
   place: "CityU of Hong Kong"
   website: "https://www.cityu.edu.hk"
-  icon: 'icon-book'
-  title: 'Education'
-  date: 'Aug 2011 - Jul 2014'
+  icon: "icon-book"
+  title: "Education"
+  date: "Aug 2011 - Jul 2014"
   desc: >
-          Graduated with an Honours in Mechatronic Engineering/Robotics & minor in Computer Science.
+    Graduated with an Honours in Mechatronic Engineering/Robotics & minor in Computer Science.
 - name: "Co-Founder & CTO"
   place: "Satinos"
   website: "https://www.linkedin.com/company/3123885"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Sep 2011 - Jul 2014'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Sep 2011 - Jul 2014"
   desc: >
-          Successfully founded an Open-Source, EdTech and Web development company to help local businesses realise their dreams.
-          <br /> Open Source, Linux Support, Web Development, Software Development & Contented Management
+    Successfully founded an Open-Source, EdTech and Web development company to help local businesses realise their dreams.
+    <br /> Open Source, Linux Support, Web Development, Software Development & Contented Management
 - name: "Research Assistant"
   place: "CityU"
   website: "http://www.cityu.edu.hk"
-  icon: 'icon-search'
-  title: 'Research'
-  date: 'Feb 2014 - Jun 2014'
+  icon: "icon-search"
+  title: "Research"
+  date: "Feb 2014 - Jun 2014"
   desc: >
-          Developed an digital drawing software that can interface with Hardware.
-          <br />Smart Materials in Pervasive Media.
-          <br />Processing, Arduino, Action Script, Java, C++, Hardware Hacking
+    Developed an digital drawing software that can interface with Hardware.
+    <br />Smart Materials in Pervasive Media.
+    <br />Processing, Arduino, Action Script, Java, C++, Hardware Hacking
 - name: "Software Developer Intern"
   place: "HSBC"
   website: "https://www.hsbc.com.hk"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Aug 2013 - Aug 2013'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Aug 2013 - Aug 2013"
   desc: >
-          Developed Mobile banking applications on Android & iOS.
-          <br />Mobile App development.
-          <br />Java, Objective C, jQuery
+    Developed Mobile banking applications on Android & iOS.
+    <br />Mobile App development.
+    <br />Java, Objective C, jQuery
 - name: "Research Intern"
   place: "Simon Fraser University"
   website: "https://www.sfu.ca"
-  icon: 'icon-search'
-  title: 'Research'
-  date: 'May 2013 – Aug 2013'
+  icon: "icon-search"
+  title: "Research"
+  date: "May 2013 – Aug 2013"
   desc: >
-          Investigated the feasibility of Plasma Ions in Gyroscopes.
-          <br />Research & Electronic Engineering.
-          <br />Electronics, Microprocessor programming
+    Investigated the feasibility of Plasma Ions in Gyroscopes.
+    <br />Research & Electronic Engineering.
+    <br />Electronics, Microprocessor programming
 - name: "Research Assistant"
   place: "CityU"
   website: "http://www.cityu.edu.hk"
-  icon: 'icon-search'
-  title: 'Research'
-  date: 'Feb 2012 - Aug 2012'
+  icon: "icon-search"
+  title: "Research"
+  date: "Feb 2012 - Aug 2012"
   desc: >
-          Researched the use of Nano particles in Solar Cells.
-          <br />Chemical & Electronic Engineering.
+    Researched the use of Nano particles in Solar Cells.
+    <br />Chemical & Electronic Engineering.
 #TODO icon change
 - name: "Production Apprentice"
   place: "Proton Industries"
   website: "#"
-  icon: 'icon-embed2'
-  title: 'Work'
-  date: 'Jun 2009 - May 2011'
+  icon: "icon-embed2"
+  title: "Work"
+  date: "Jun 2009 - May 2011"
   desc: >
-          Production Apprentice in a Salt Manufacturing factory.
-          <br />Salt Production.
-          <br />Solar salt production, refining & preservation
+    Production Apprentice in a Salt Manufacturing factory.
+    <br />Salt Production.
+    <br />Solar salt production, refining & preservation
 - name: "High School Certificate, Mathematics"
   place: "Nalanda College"
   website: "www.ndc.edu.in/"
-  icon: 'icon-book'
-  title: 'Education'
-  date: 'Jul 2009'
+  icon: "icon-book"
+  title: "Education"
+  date: "Jul 2009"
   desc: >
-          Graduated with a focus on Mathematics, Physics and Chemistry.
+    Graduated with a focus on Mathematics, Physics and Chemistry.
 - name: "ICSE, Mathematics & Sciences"
   place: "Vikasa Vidya Vanam"
   website: "http://vivivanam.weebly.com"
-  icon: 'icon-book'
-  title: 'Education'
-  date: 'Jul 2007'
+  icon: "icon-book"
+  title: "Education"
+  date: "Jul 2007"
   desc: >
-          Indian Certificate of Secondary Education.
-          <br />Graduated with a focus on Mathematics & Sciences.
+    Indian Certificate of Secondary Education.
+    <br />Graduated with a focus on Mathematics & Sciences.
