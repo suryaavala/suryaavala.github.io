@@ -1,0 +1,75 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: ":detective: Lint"
+        run: npm run lint
+
+      - name: ":building_construction: Build"
+        run: npm run build
+
+      - name: Build and Upload Static Site
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+  test:
+    needs: build
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: ":test_tube: Run Playwright tests"
+      run: npx playwright test
+
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+
+  deploy:
+    # only on main
+    if: github.ref == 'refs/heads/main'
+
+    needs: [build, test]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # no need to checkout, just deploying w/ artifact from build
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+
+      - name: ":rocket: Deploy!!"
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./build
+          cname: www.suryaavala.com
