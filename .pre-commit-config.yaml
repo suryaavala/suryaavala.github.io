@@ -1,0 +1,110 @@
+ci:
+  autoupdate_schedule: quarterly
+
+default_stages: [commit]
+
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: check-yaml
+      - id: destroyed-symlinks
+      - id: end-of-file-fixer
+        exclude: ^.*\.json$
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+      - id: file-contents-sorter
+        files: ^uses-links\.yml$
+
+  # - repo: https://github.com/pre-commit/mirrors-prettier
+  #   rev: v2.7.1
+  #   hooks:
+  #     - id: prettier
+  #       args: [--config, site/.prettierrc.yml, --write] # edit files in-place
+  #       additional_dependencies:
+  #         - prettier
+  #         - prettier-plugin-svelte
+  #         - svelte
+
+  # - repo: https://github.com/adrienverge/yamllint
+  #   rev: v1.26.3
+  #   hooks:
+  #     - id: yamllint
+  #       args: [--config-file, utils/.yamllint.yml]
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.31.1
+    hooks:
+      - id: markdownlint
+        # MD013: line too long
+        # MD033: no inline HTML
+        # MD041: first line in a file should be a top-level heading
+        args: [--disable, MD013, MD033, MD041, '--']
+
+  # - repo: https://github.com/codespell-project/codespell
+  #   rev: v2.1.0
+  #   hooks:
+  #     - id: codespell
+  #       args: [--ignore-words-list, ons]
+  #       stages: [commit, commit-msg]
+  #       exclude: yarn.lock
+
+  # - repo: https://github.com/pre-commit/mirrors-eslint
+  #   rev: v8.19.0
+  #   hooks:
+  #     - id: eslint
+  #       types: [file]
+  #       files: \.(svelte|js|ts)$
+  #       additional_dependencies:
+  #         - eslint
+  #         - svelte
+  #         - typescript
+  #         - eslint-plugin-svelte3
+  #         - '@typescript-eslint/eslint-plugin'
+  #         - '@typescript-eslint/parser'
+
+  - repo: local
+    hooks:
+      - id: webp-screenshots
+        name: Screenshots must use WebP format
+        entry: screenshot filenames must end in .webp
+        language: fail
+        files: '^site/static/screenshots/.*(?<!\.webp)$'
+
+      - id: no-bracket-links
+        name: 'Brackets should not be inside links [[link]](url) -> [[link](url)]'
+        entry: '\]\]\('
+        language: pygrep
+        types: [markdown]
+
+      - id: no-http
+        name: URLs must use HTTPS
+        entry: 'http:'
+        language: pygrep
+        types_or: [markdown, yaml]
+        exclude: .pre-commit-config.yaml
+
+      - id: no-repeated-whitespace
+        name: No repeated spaces
+        entry: '\S+\s{2,}'
+        language: pygrep
+        types: [text]
+        exclude_types: [javascript]
+        exclude: .pre-commit-config.yaml
+
+      - id: format-urls
+        name: Format URLs
+        entry: utils/format_urls.py
+        language: python
+        files: ^(sites.yml|readme.md|utils/format_urls.py)$
+
+      - id: render-static-site
+        name: Render static site
+        language: system
+        pass_filenames: false
+        entry: npm run build
+        files: ^src\/.*|.*\.js|.*\.json$
