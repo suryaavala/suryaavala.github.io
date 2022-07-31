@@ -102,9 +102,9 @@ repos:
         language: python
         files: ^(sites.yml|readme.md|utils/format_urls.py)$
 
-      - id: render-static-site
-        name: Render static site
-        language: system
-        pass_filenames: false
-        entry: npm run build
-        files: ^src\/.*|.*\.js|.*\.json$
+      # - id: render-static-site
+      #   name: Render static site
+      #   language: system
+      #   pass_filenames: false
+      #   entry: npm run build
+      #   files: ^src\/.*|.*\.js|.*\.json$
