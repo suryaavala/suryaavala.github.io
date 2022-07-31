@@ -88,13 +88,13 @@ repos:
         types_or: [markdown, yaml]
         exclude: .pre-commit-config.yaml
 
-      - id: no-repeated-whitespace
-        name: No repeated spaces
-        entry: '\S+\s{2,}'
-        language: pygrep
-        types: [text]
-        exclude_types: [javascript]
-        exclude: .pre-commit-config.yaml
+      # - id: no-repeated-whitespace
+      #   name: No repeated spaces
+      #   entry: '\S+\s{2,}'
+      #   language: pygrep
+      #   types: [text]
+      #   exclude_types: [javascript]
+      #   exclude: .pre-commit-config.yaml
 
       - id: format-urls
         name: Format URLs
