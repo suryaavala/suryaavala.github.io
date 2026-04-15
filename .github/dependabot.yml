@@ -1,0 +1,96 @@
+# Dependabot — https://docs.github.com/en/code-security/dependabot
+#
+# Grouped updates keep related packages moving in lockstep (astro + its
+# integrations MUST upgrade together; playwright core + browsers likewise).
+# Monthly cadence matches the cost of full regression runs for each PR.
+
+version: 2
+updates:
+  # npm — groups below, grouped by the blast radius of an upgrade
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+      time: '06:00'
+      timezone: Australia/Sydney
+    open-pull-requests-limit: 8
+    versioning-strategy: increase # bump exact pins, preserving save-exact=true
+    labels:
+      - dependencies
+      - automated
+    commit-message:
+      prefix: chore(deps)
+      include: scope
+    groups:
+      astro-ecosystem:
+        patterns:
+          - astro
+          - '@astrojs/*'
+          - '@astro-community/*'
+      svelte-ecosystem:
+        patterns:
+          - svelte
+          - svelte-check
+          - 'svelte-*'
+      styling:
+        patterns:
+          - tailwindcss
+          - '@tailwindcss/*'
+          - autoprefixer
+          - postcss
+          - 'postcss-*'
+      content:
+        patterns:
+          - 'remark-*'
+          - 'rehype-*'
+          - '@mdx-js/*'
+          - shiki
+          - katex
+          - mdast-util-*
+          - unified
+      test:
+        patterns:
+          - vitest
+          - '@vitest/*'
+          - '@playwright/*'
+          - playwright
+          - '@axe-core/*'
+          - jsdom
+          - happy-dom
+      lighthouse:
+        patterns:
+          - '@lhci/*'
+          - lighthouse
+          - 'size-limit'
+          - '@size-limit/*'
+      tooling:
+        patterns:
+          - eslint
+          - 'eslint-*'
+          - '@typescript-eslint/*'
+          - prettier
+          - 'prettier-*'
+          - typescript
+          - tsx
+          - zod
+          - semver
+
+  # GitHub Actions — keep CI workflow actions current
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+      time: '06:00'
+      timezone: Australia/Sydney
+    open-pull-requests-limit: 5
+    labels:
+      - ci
+      - automated
+    commit-message:
+      prefix: chore(ci)
+    groups:
+      actions:
+        patterns:
+          - '*'

@@ -1,0 +1,70 @@
+---
+/**
+ * Single metric tile for the Impact Cluster (spec §4.1, item 2).
+ *
+ * - Final value pre-rendered in DOM (Lighthouse/no-JS truth, plan §3).
+ * - MetricCounter island animates count-up on intersection without changing
+ *   the final DOM value.
+ * - Methodology rendered as `<details>` so screen readers and search crawlers
+ *   see the full text but UI stays scannable.
+ */
+
+import type { Metric } from '@data/schemas';
+import MetricCounter from '@islands/MetricCounter.svelte';
+
+export interface Props {
+  metric: Metric;
+}
+
+const { metric } = Astro.props;
+const { value, direction, label, context, methodology, confidenceBound, accent } = metric;
+
+const directionLabel = direction === '↑' ? 'increase' : direction === '↓' ? 'decrease' : 'measured';
+const a11yLabel = `${value} ${directionLabel}: ${label}`;
+---
+
+<article
+  class="group relative flex flex-col gap-2 rounded-md border border-border-base/60 bg-bg-surface/60 p-4 transition-all duration-200 hover:border-impact hover:shadow-glow-impact"
+  style={`--metric-accent: ${accent}`}
+>
+  <div class="flex items-baseline gap-2 font-mono">
+    <MetricCounter
+      client:visible
+      finalValue={value}
+      ariaLabel={a11yLabel}
+      class="text-3xl font-bold leading-none"
+      style={`color: ${accent}`}
+    />
+    {
+      direction && (
+        <span aria-hidden="true" class="text-xl leading-none" style={`color: ${accent}`}>
+          {direction}
+        </span>
+      )
+    }
+  </div>
+
+  <p class="text-sm leading-snug text-text-primary">{label}</p>
+
+  <p class="font-mono text-[11px] uppercase tracking-wide text-infra">{context}</p>
+
+  {
+    confidenceBound && (
+      <p class="font-mono text-[11px] text-text-muted">
+        CI [{confidenceBound.lower} – {confidenceBound.upper}]
+        {confidenceBound.note && <span class="italic"> · {confidenceBound.note}</span>}
+      </p>
+    )
+  }
+
+  {
+    methodology && (
+      <details class="mt-1 font-mono text-[11px] text-text-muted">
+        <summary class="cursor-pointer text-text-muted hover:text-text-primary">
+          methodology
+        </summary>
+        <p class="mt-1 leading-snug">{methodology}</p>
+      </details>
+    )
+  }
+</article>

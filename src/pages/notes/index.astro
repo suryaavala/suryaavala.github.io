@@ -1,0 +1,112 @@
+---
+/**
+ * /notes — Long-form essay index (spec §4.5).
+ *
+ * Lists every published note from the `notes` content collection, sorted by
+ * publishDate desc. Drafts are excluded from the index in non-dev runs.
+ */
+
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import GradientDivider from '@components/GradientDivider.astro';
+import TechBadge from '@components/TechBadge.astro';
+
+const isProd = import.meta.env.PROD;
+const allNotes = await getCollection('notes', ({ data }) => (isProd ? !data.isDraft : true));
+const notes = allNotes.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const categoryAccents: Record<string, string> = {
+  'Healthcare & Clinical NLP': '#ff79c6',
+  'Energy & Time-Series': '#50fa7b',
+  'Recommender Systems': '#bd93f9',
+  'Distributed Systems': '#8be9fd',
+  'GenAI Architecture': '#bd93f9',
+  'Mathematical Substrates': '#f1fa8c',
+  'Philosophy & Public Policy': '#ffb86c'
+};
+---
+
+<BaseLayout
+  title="Notes — Surya Avala"
+  description="Long-form essays on MLOps, GenAI architecture, causal inference, and platform engineering — anchored to real production experience."
+>
+  <main id="main" class="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+    <header class="mb-8">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">~/notes</p>
+      <h1
+        class="mt-2 font-mono text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl"
+      >
+        Notes · {notes.length} essay{notes.length === 1 ? '' : 's'}
+      </h1>
+      <p class="mt-3 max-w-2xl text-sm text-text-muted sm:text-base">
+        Long-form on MLOps, GenAI architecture, causal inference, and platform engineering —
+        anchored to real production experience.
+        <a class="text-brand hover:underline" href="/rss.xml">RSS →</a>
+      </p>
+      <GradientDivider spacing="mt-6 mb-0" />
+    </header>
+
+    <ul class="space-y-4" role="list">
+      {
+        notes.map((note) => {
+          const accent = categoryAccents[note.data.category] ?? '#bd93f9';
+          const dateISO = note.data.publishDate.toISOString().slice(0, 10);
+          const dateLabel = note.data.publishDate.toLocaleDateString('en-AU', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+          return (
+            <li>
+              <a
+                href={`/notes/${note.slug}`}
+                class="group block rounded-lg border border-border-base/60 bg-bg-surface/60 p-5 transition-all duration-200 hover:border-brand hover:shadow-glow-brand sm:p-6"
+              >
+                <header class="mb-2 flex flex-wrap items-baseline gap-3">
+                  <h2 class="font-mono text-lg text-text-primary group-hover:text-brand sm:text-xl">
+                    {note.data.title}
+                  </h2>
+                  {note.data.requiresMath && (
+                    <span
+                      class="rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+                      style="border-color: #f1fa8c; color: #f1fa8c"
+                    >
+                      math
+                    </span>
+                  )}
+                  {note.data.isDraft && (
+                    <span class="rounded-full border border-danger px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-danger">
+                      draft
+                    </span>
+                  )}
+                </header>
+                <p class="text-sm leading-snug text-text-primary">{note.data.description}</p>
+                {note.data.commercialContext && (
+                  <p class="mt-2 font-mono text-[11px] text-impact">
+                    ▸ {note.data.commercialContext}
+                  </p>
+                )}
+                <footer class="mt-3 flex flex-wrap items-center gap-2 font-mono text-xs text-text-muted">
+                  <time datetime={dateISO}>{dateLabel}</time>
+                  <span aria-hidden="true">·</span>
+                  <span style={`color: ${accent}`}>{note.data.category}</span>
+                  <span aria-hidden="true" class="ml-auto text-text-muted group-hover:text-brand">
+                    read →
+                  </span>
+                </footer>
+                <ul class="mt-3 flex flex-wrap gap-1.5" role="list" aria-label="Tags">
+                  {note.data.tags.map((tag) => (
+                    <li>
+                      <TechBadge accent={accent}>{tag}</TechBadge>
+                    </li>
+                  ))}
+                </ul>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </main>
+</BaseLayout>

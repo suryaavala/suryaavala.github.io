@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light "Paper" mode (secondary) */
+    --bg-base: 248 249 250; /* #f8f9fa */
+    --bg-surface: 255 255 255; /* #ffffff */
+    --bg-surface-alt: 241 245 249; /* slate-100 */
+    --border-base: 229 231 235; /* gray-200 */
+    --text-primary: 30 41 59; /* slate-800 */
+    --text-muted: 100 116 139; /* slate-500 */
+  }
+
+  :root.dark {
+    /* Dracula / GitHub Dark (primary) */
+    --bg-base: 13 17 23; /* #0d1117 */
+    --bg-surface: 22 27 34; /* #161b22 */
+    --bg-surface-alt: 40 42 54; /* #282a36 */
+    --border-base: 48 54 61; /* #30363d */
+    --text-primary: 248 248 242; /* #f8f8f2 */
+    --text-muted: 98 114 164; /* #6272a4 */
+  }
+
+  html {
+    color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-bg-base font-sans text-text-primary antialiased;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: #bd93f9;
+    color: #0d1117;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Focus-visible ring — brand purple on any interactive */
+  *:focus-visible {
+    outline: 2px solid #bd93f9;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .dracula-rainbow {
+    background: linear-gradient(
+      90deg,
+      #ff5555 0%,
+      #ffb86c 16%,
+      #f1fa8c 33%,
+      #50fa7b 50%,
+      #8be9fd 66%,
+      #bd93f9 83%,
+      #ff79c6 100%
+    );
+  }
+
+  .bento-card {
+    @apply relative rounded-lg border border-border-base bg-bg-surface p-6 transition-all duration-200;
+    @apply hover:border-brand hover:shadow-glow-brand;
+  }
+
+  .bento-card--brand {
+    @apply hover:border-brand hover:shadow-glow-brand;
+  }
+  .bento-card--infra {
+    @apply hover:border-infra hover:shadow-glow-infra;
+  }
+  .bento-card--impact {
+    @apply hover:border-impact hover:shadow-glow-impact;
+  }
+  .bento-card--human {
+    @apply hover:border-human hover:shadow-glow-human;
+  }
+  .bento-card--status {
+    @apply hover:border-status hover:shadow-glow-status;
+  }
+}

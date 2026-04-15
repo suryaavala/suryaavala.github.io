@@ -1,0 +1,93 @@
+---
+/**
+ * Bento grid card primitive (spec §4.1).
+ *
+ * Visual contract:
+ *   - Subtle border by default; on hover, border + soft glow in the accent colour.
+ *   - Optional badge ribbon (Featured / Latest) overlaid top-right.
+ *   - Optional anchor href turns the entire card into a single accessible link
+ *     (semantic <a> wrapping <article> isn't valid — instead we expose role link
+ *     on the article and a stretched anchor for the click target).
+ *
+ * Layout is controlled by the parent grid via `class` prop spanning utilities.
+ */
+
+export type BentoAccent = 'brand' | 'infra' | 'impact' | 'human' | 'status' | 'stack';
+
+export interface Props {
+  /** Tailwind grid-span classes (e.g., 'col-span-2 row-span-2'). */
+  class?: string;
+  /** Accent token controlling hover border + glow. */
+  accent?: BentoAccent;
+  /** Optional badge label (top-right ribbon). */
+  badge?: string;
+  /** Optional badge accent hex (overrides accent token for the badge). */
+  badgeColor?: string;
+  /** Optional href; makes the card a stretched-link block. */
+  href?: string;
+  /** External link rel, defaults to noopener for safety. */
+  rel?: string;
+  /** ARIA-labelledby target, used when a heading inside the card identifies it. */
+  ariaLabelledby?: string;
+}
+
+const {
+  class: klass = '',
+  accent = 'brand',
+  badge,
+  badgeColor,
+  href,
+  rel = 'noopener',
+  ariaLabelledby
+} = Astro.props;
+
+const accentClassMap: Record<BentoAccent, string> = {
+  brand: 'hover:border-brand hover:shadow-glow-brand',
+  infra: 'hover:border-infra hover:shadow-glow-infra',
+  impact: 'hover:border-impact hover:shadow-glow-impact',
+  human: 'hover:border-human hover:shadow-glow-human',
+  status: 'hover:border-status hover:shadow-glow-status',
+  stack: 'hover:border-stack hover:shadow-glow-impact'
+};
+
+const accentBorderMap: Record<BentoAccent, string> = {
+  brand: '#bd93f9',
+  infra: '#8be9fd',
+  impact: '#ffb86c',
+  human: '#ff79c6',
+  status: '#50fa7b',
+  stack: '#f1fa8c'
+};
+
+const badgeFill = badgeColor ?? accentBorderMap[accent];
+---
+
+<article
+  class:list={[
+    'group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border-base/60 bg-bg-surface p-5 transition-all duration-200 sm:p-6',
+    accentClassMap[accent],
+    klass
+  ]}
+  aria-labelledby={ariaLabelledby}
+>
+  {
+    badge && (
+      <span
+        class="absolute right-3 top-3 z-10 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider"
+        style={`background-color: ${badgeFill}1a; color: ${badgeFill}; border: 1px solid ${badgeFill}`}
+      >
+        {badge}
+      </span>
+    )
+  }
+
+  <slot />
+
+  {
+    href && (
+      <a href={href} rel={rel} class="absolute inset-0 z-0" aria-labelledby={ariaLabelledby}>
+        <span class="sr-only">Open link</span>
+      </a>
+    )
+  }
+</article>

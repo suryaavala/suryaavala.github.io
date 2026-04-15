@@ -1,0 +1,52 @@
+---
+/**
+ * Dracula-styled inline badge for tech tags / pills.
+ *
+ * Used in the Hero stack pills, Bento card tag rows, and the /stack badge
+ * grid. Accent is set per-instance via inline CSS variables so we don't
+ * generate one Tailwind class per Dracula colour.
+ */
+
+export interface Props {
+  /** Hex accent colour (Dracula token). */
+  accent?: string;
+  /** Optional href turns the badge into an anchor. */
+  href?: string;
+  /** External link rel — defaults to noopener for safety. */
+  rel?: string;
+  /** Visual emphasis level. `solid` = filled, `outline` = bordered. */
+  variant?: 'outline' | 'solid';
+  /** Optional additional Tailwind classes. */
+  class?: string;
+}
+
+const {
+  accent = '#bd93f9',
+  href,
+  rel = 'noopener',
+  variant = 'outline',
+  class: klass = ''
+} = Astro.props;
+
+const styleVar = `--badge-accent: ${accent};`;
+
+const baseClasses = [
+  'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-xs transition-all duration-150',
+  variant === 'outline'
+    ? 'border-[color:var(--badge-accent)] bg-transparent text-[color:var(--badge-accent)] hover:bg-[color:var(--badge-accent)]/10'
+    : 'border-transparent bg-[color:var(--badge-accent)]/15 text-[color:var(--badge-accent)] hover:bg-[color:var(--badge-accent)]/25',
+  klass
+];
+---
+
+{
+  href ? (
+    <a href={href} rel={rel} class:list={baseClasses} style={styleVar}>
+      <slot />
+    </a>
+  ) : (
+    <span class:list={baseClasses} style={styleVar}>
+      <slot />
+    </span>
+  )
+}

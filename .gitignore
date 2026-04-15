@@ -1,11 +1,48 @@
 .DS_Store
-node_modules
-/build
-/.svelte-kit
-/package
-.env
-.env.*
-!.env.example
+
+# dependencies
+node_modules/
+
+# astro
+dist/
+.astro/
+
+# tests
 /test-results/
 /playwright-report/
 /playwright/.cache/
+/coverage/
+
+# lighthouse
+/lighthouse-reports/
+/.lighthouseci/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# Claude Code — launch.json is tracked; local tool-permission grants are not
+/.claude/settings.local.json
+
+# os
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# specs — PR descriptions and mentor reviews are per-PR artefacts, not source
+# of truth. The design spec itself (specs/01_design.md) IS committed, and the
+# evidence.html approval brief (root) stays tracked too.
+/specs/prs/
+/specs/reviews/
+/evidence-assets/

@@ -1,0 +1,75 @@
+# Pre-commit hooks — https://pre-commit.com
+#
+# Install:  pre-commit install
+# Run all:  pre-commit run --all-files
+#
+# CI runs the same checks directly via `make verify`, so these hooks exist
+# to catch obvious breakage locally before a commit hits GitHub Actions.
+
+default_stages: [commit]
+fail_fast: false
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^(.*\.svg|.*\.snap)$
+      - id: end-of-file-fixer
+        exclude: ^(.*\.svg|.*\.snap|tests/e2e/.*-snapshots/.*)$
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: check-json
+        exclude: ^(tsconfig\.json|\.vscode/.*\.json)$ # JSON-with-comments
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-symlinks
+      - id: destroyed-symlinks
+      - id: check-added-large-files
+        args: [--maxkb=400]
+        exclude: ^public/fonts/.*\.woff2$ # self-hosted variable fonts are legitimately large
+
+  - repo: local
+    hooks:
+      - id: prettier-check
+        name: prettier (check)
+        language: system
+        entry: npx prettier --check
+        types_or: [javascript, jsx, ts, tsx, astro, svelte, css, scss, json, markdown, yaml]
+        exclude: ^(dist/|\.astro/|playwright-report/|test-results/|tests/e2e/.*-snapshots/)
+
+      - id: eslint
+        name: eslint
+        language: system
+        entry: npx eslint
+        types_or: [javascript, jsx, ts, tsx, astro, svelte]
+        exclude: ^(dist/|\.astro/)
+
+      - id: astro-check
+        name: astro check (tsc + content collections)
+        language: system
+        entry: npx astro check
+        pass_filenames: false
+        files: \.(astro|ts|tsx|mdx)$
+
+      - id: validate-data
+        name: validate /src/data/*.ts (Zod)
+        language: system
+        entry: npx tsx scripts/validate-data.ts
+        pass_filenames: false
+        files: ^src/(data|content)/.*\.(ts|mdx)$
+
+      - id: check-dep-pinning
+        name: reject unpinned deps (^ / ~ / ranges)
+        language: system
+        entry: node scripts/check-dep-pinning.mjs
+        pass_filenames: false
+        files: ^package(-lock)?\.json$
+
+      - id: no-http
+        name: forbid http:// in tracked files
+        language: pygrep
+        entry: 'http://(?!127\.0\.0\.1|localhost)'
+        types: [text]
+        exclude: ^(\.pre-commit-config\.yaml|lighthouserc\.json|playwright\.config\.ts|scripts/|tests/)

@@ -1,0 +1,33 @@
+---
+/**
+ * Pulsing availability dot (spec §4.1, item 3).
+ *
+ * Pure CSS animation; `prefers-reduced-motion` already neutralised globally.
+ * The visible dot is a static disc; the ring is the animated `pulse-ring`
+ * keyframe defined in tailwind.config.mjs.
+ */
+
+export interface Props {
+  /** Hex token for the beacon (status green by default). */
+  color?: string;
+  /** Accessible label exposed to screen readers. */
+  label?: string;
+}
+
+const { color = '#50fa7b', label = 'Currently available' } = Astro.props;
+---
+
+<span
+  class="relative inline-flex h-3 w-3 items-center justify-center"
+  role="img"
+  aria-label={label}
+>
+  <span
+    aria-hidden="true"
+    class="absolute inline-flex h-full w-full rounded-full opacity-75 motion-safe:animate-pulse-ring"
+    style={`background-color: ${color}`}></span>
+  <span
+    aria-hidden="true"
+    class="relative inline-flex h-2.5 w-2.5 rounded-full"
+    style={`background-color: ${color}`}></span>
+</span>

@@ -1,0 +1,134 @@
+---
+/**
+ * /ping — Contact matrix (spec §4.6).
+ *
+ * Five-channel grid matching the README header, rendered as Dracula-badge
+ * hover cards. Pure HTML, zero JS. Email is `mailto:` — the spec deliberately
+ * lists the address; obfuscation is not used since the value already lives in
+ * persona/README and would degrade UX with no real anti-spam benefit.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import GradientDivider from '@components/GradientDivider.astro';
+
+const channels: {
+  channel: string;
+  label: string;
+  href: string;
+  accent: string;
+  icon: string;
+  rel?: string;
+}[] = [
+  {
+    channel: 'GitHub',
+    label: 'github.com/suryaavala',
+    href: 'https://github.com/suryaavala',
+    accent: '#bd93f9',
+    icon: '⌥',
+    rel: 'me noopener'
+  },
+  {
+    channel: 'LinkedIn',
+    label: 'linkedin.com/in/suryaavala',
+    href: 'https://linkedin.com/in/suryaavala',
+    accent: '#8be9fd',
+    icon: 'in',
+    rel: 'me noopener'
+  },
+  {
+    channel: 'Email',
+    label: 'suryaavinashavala@gmail.com',
+    href: 'mailto:suryaavinashavala@gmail.com',
+    accent: '#50fa7b',
+    icon: '@',
+    rel: 'me'
+  },
+  {
+    channel: 'Buy Me a Coffee',
+    label: 'buymeacoffee.com/suryaavala',
+    href: 'https://buymeacoffee.com/suryaavala',
+    accent: '#f1fa8c',
+    icon: '☕',
+    rel: 'noopener'
+  },
+  {
+    channel: 'GitHub Sponsors',
+    label: 'github.com/sponsors/suryaavala',
+    href: 'https://github.com/sponsors/suryaavala',
+    accent: '#ff79c6',
+    icon: '♥',
+    rel: 'noopener'
+  }
+];
+---
+
+<BaseLayout
+  title="Ping — Surya Avala"
+  description="Five-channel contact matrix: GitHub, LinkedIn, email, Buy Me a Coffee, GitHub Sponsors."
+>
+  <main id="main" class="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+    <header class="mb-8">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">~/ping</p>
+      <h1
+        class="mt-2 font-mono text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl"
+      >
+        Open a TCP socket
+      </h1>
+      <p class="mt-3 max-w-2xl text-sm text-text-muted sm:text-base">
+        Five channels. Pick whichever fits the latency you're optimising for.
+      </p>
+      <GradientDivider spacing="mt-6 mb-0" />
+    </header>
+
+    <ul class="grid gap-4 sm:grid-cols-2" role="list">
+      {
+        channels.map(({ channel, label, href, accent, icon, rel }) => (
+          <li>
+            <a
+              href={href}
+              rel={rel}
+              class="group flex items-center gap-4 rounded-lg border border-border-base/60 bg-bg-surface p-5 transition-all duration-200 hover:shadow-glow-brand"
+              style={`--ping-accent: ${accent}; --tw-shadow-color: ${accent}`}
+            >
+              <span
+                aria-hidden="true"
+                class="flex h-12 w-12 items-center justify-center rounded-md font-mono text-lg font-semibold transition-colors"
+                style={`background-color: ${accent}1a; color: ${accent}; border: 1px solid ${accent}55`}
+              >
+                {icon}
+              </span>
+              <span class="flex flex-1 flex-col">
+                <span
+                  class="font-mono text-sm uppercase tracking-widest"
+                  style={`color: ${accent}`}
+                >
+                  {channel}
+                </span>
+                <span class="font-mono text-xs text-text-muted group-hover:text-text-primary">
+                  {label}
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+                class="font-mono text-xs text-text-muted transition-transform group-hover:translate-x-1"
+                style={`color: ${accent}`}
+              >
+                →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <footer
+      class="mt-12 rounded-md border border-border-base/40 bg-bg-surface/40 p-4 font-mono text-xs leading-relaxed text-text-muted"
+    >
+      <p>
+        <span class="text-status">●</span> Response SLA: best-effort 48h on email, async on LinkedIn.
+        For role discussions please cite seniority + scope (Principal / Staff / VP) up front — saves
+        a round-trip.
+      </p>
+    </footer>
+  </main>
+</BaseLayout>

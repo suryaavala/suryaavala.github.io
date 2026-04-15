@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff5555"/>
+      <stop offset="16%" stop-color="#ffb86c"/>
+      <stop offset="33%" stop-color="#f1fa8c"/>
+      <stop offset="50%" stop-color="#50fa7b"/>
+      <stop offset="66%" stop-color="#8be9fd"/>
+      <stop offset="83%" stop-color="#bd93f9"/>
+      <stop offset="100%" stop-color="#ff79c6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Top tag -->
+  <text x="80" y="120" font-family="Menlo, ui-monospace, monospace" font-size="24" fill="#6272a4" letter-spacing="4">~/whoami → Surya Avala</text>
+
+  <!-- Headline -->
+  <text x="80" y="220" font-family="Menlo, ui-monospace, monospace" font-size="64" font-weight="600" fill="#f8f8f2">Principal AI Systems Architect</text>
+  <text x="80" y="310" font-family="Menlo, ui-monospace, monospace" font-size="64" font-weight="600" fill="#f8f8f2">· Staff ML Engineer</text>
+
+  <!-- Tagline -->
+  <text x="80" y="395" font-family="Menlo, ui-monospace, monospace" font-size="28" font-style="italic" fill="#bd93f9">"Math + Agents + Scale + Security"</text>
+
+  <!-- Industries -->
+  <text x="80" y="475" font-family="Menlo, ui-monospace, monospace" font-size="22" fill="#8be9fd">Healthcare · Energy · Finance · Tech</text>
+
+  <!-- Rainbow divider -->
+  <rect x="80" y="510" width="1040" height="3" fill="url(#rainbow)" opacity="0.85"/>
+
+  <!-- Footer -->
+  <text x="80" y="570" font-family="Menlo, ui-monospace, monospace" font-size="20" fill="#6272a4">suryaavala.com · github.com/suryaavala</text>
+  <text x="1120" y="570" font-family="Menlo, ui-monospace, monospace" font-size="20" fill="#50fa7b" text-anchor="end">● open to work</text>
+</svg>

@@ -1,0 +1,49 @@
+# Nightly full-site Lighthouse audit.
+#
+# The in-PR `lhci` job only measures two pages (spec §1.2: homepage +
+# representative math note). This workflow runs the same budgets across
+# every route so regressions on /architecture, /stack, etc. can't sneak in.
+
+name: Lighthouse (nightly)
+
+on:
+  schedule:
+    # 14:00 UTC = 00:00 AEST, off-peak.
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-site-audit:
+    name: Full-site LHCI
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: LHCI (all routes)
+        env:
+          LHCI_URLS: >-
+            http://127.0.0.1:4323/,
+            http://127.0.0.1:4323/architecture/,
+            http://127.0.0.1:4323/runtime/,
+            http://127.0.0.1:4323/stack/,
+            http://127.0.0.1:4323/notes/,
+            http://127.0.0.1:4323/notes/hidden-technical-debt-in-ml/,
+            http://127.0.0.1:4323/notes/causal-inference-over-deep-learning/,
+            http://127.0.0.1:4323/notes/first-principles-multi-agent-orchestration/,
+            http://127.0.0.1:4323/ping/
+        run: npm run lhci -- --collect.url="${LHCI_URLS// /}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-nightly
+          path: .lighthouseci
+          retention-days: 30

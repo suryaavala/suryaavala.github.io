@@ -1,0 +1,276 @@
+---
+/**
+ * Homepage — the Bento Grid (spec §4.1).
+ *
+ * Eight semantic nodes, signal-hierarchy-ordered. Above-the-fold guarantee
+ * on mobile via single-column collapse + <details> "Show more" for nodes 5-8
+ * (plan §key decision #10).
+ *
+ * Every metric, project, and PR shown here is read from the typed-data
+ * modules under /src/data/ — there is intentionally zero hardcoded
+ * narrative content in this file; the build will fail at `prebuild` if
+ * any of those modules drift away from the Zod schema (spec §6.4).
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BentoGrid from '@components/BentoGrid.astro';
+import BentoCard from '@components/BentoCard.astro';
+import MetricCard from '@components/MetricCard.astro';
+import GradientDivider from '@components/GradientDivider.astro';
+import StatusBeacon from '@components/StatusBeacon.astro';
+import TechBadge from '@components/TechBadge.astro';
+import JsonLdPerson from '@components/JsonLdPerson.astro';
+import TypingHero from '@islands/TypingHero.svelte';
+
+import { metrics } from '@data/metrics';
+import { projects, upstreamPRs } from '@data/projects';
+
+const heroPhrases = [
+  'Healthcare · Energy · Fintech · Tech',
+  'Staff Machine Learning Engineer',
+  'Principal AI Systems Architect',
+  'Engineering Leader',
+  'Pastry Enthusiast · Human · Philosopher'
+];
+const initialHeroPhrase = heroPhrases[0]!; // SSR-rendered for LCP discipline
+
+// Featured cards — strict spec mapping (§4.1 cards 4 + 5).
+const featured = projects.find((p) => p.badgeLabel === 'Featured');
+const latest = projects.find((p) => p.badgeLabel === 'Latest');
+if (!featured || !latest) {
+  throw new Error(
+    'Spec §4.1 violation: homepage requires both Featured and Latest projects in projects.ts'
+  );
+}
+
+const stackPills: { label: string; accent: string }[] = [
+  { label: 'Python', accent: '#f1fa8c' },
+  { label: 'C++', accent: '#8be9fd' },
+  { label: 'Kubernetes', accent: '#8be9fd' },
+  { label: 'PyTorch', accent: '#ffb86c' },
+  { label: 'vLLM', accent: '#ffb86c' },
+  { label: 'LangGraph', accent: '#bd93f9' }
+];
+---
+
+<BaseLayout
+  title="Surya Avala — Principal AI Systems Architect & Staff ML Engineer"
+  description="Full-Stack Regulated Convergence: Math + Agents + Scale + Security. Over a decade eliminating Hidden Technical Debt in ML across Healthcare, Energy, and Finance."
+>
+  <JsonLdPerson slot="head" />
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+    <BentoGrid ariaLabel="Surya Avala — homepage overview">
+      {/* ── 1. Engine / Hero (full-width banner) ─────────────────────────── */}
+      <BentoCard accent="brand" class="md:col-span-2 lg:col-span-4" ariaLabelledby="hero-title">
+        <header class="flex flex-col gap-4">
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
+            ~/whoami → Surya Avala
+          </p>
+          <h1
+            id="hero-title"
+            class="font-mono text-3xl font-semibold leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl"
+          >
+            <TypingHero client:idle initial={initialHeroPhrase} phrases={heroPhrases} />
+          </h1>
+          <p class="text-base text-text-primary sm:text-lg">
+            Principal AI Systems Architect · Staff ML Engineer · Engineering Leader
+          </p>
+          <p class="font-mono text-sm italic text-brand sm:text-base">
+            "Full-Stack Regulated Convergence: Math + Agents + Scale + Security."
+          </p>
+          <blockquote
+            class="border-l-2 border-text-muted/50 pl-4 font-mono text-xs text-text-muted sm:text-sm"
+          >
+            "I've always been passionate about computers and the ability to make them solve problems
+            for us."
+          </blockquote>
+          <p class="font-mono text-xs text-infra sm:text-sm">
+            Healthcare · Energy · Finance · Tech
+          </p>
+          <ul class="flex flex-wrap gap-2 pt-1" role="list" aria-label="Primary stack">
+            {
+              stackPills.map(({ label, accent }) => (
+                <li>
+                  <TechBadge accent={accent} variant="outline">
+                    {label}
+                  </TechBadge>
+                </li>
+              ))
+            }
+          </ul>
+        </header>
+        <GradientDivider spacing="mt-6 mb-0" />
+      </BentoCard>
+
+      {/* ── 2. Impact Cluster (2x2) — six metrics ────────────────────────── */}
+      <BentoCard
+        accent="impact"
+        class="md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2"
+        ariaLabelledby="impact-title"
+      >
+        <header class="mb-1 flex items-center justify-between">
+          <h2 id="impact-title" class="font-mono text-sm uppercase tracking-widest text-impact">
+            Quantified Impact
+          </h2>
+          <a
+            href="/runtime"
+            class="font-mono text-xs text-text-muted underline-offset-4 hover:text-impact hover:underline"
+          >
+            full runtime →
+          </a>
+        </header>
+        <p class="text-xs text-text-muted">
+          Six measured outcomes across Healthcare, Energy & Recommender systems.
+        </p>
+        <div class="mt-3 grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+          {metrics.map((metric) => <MetricCard metric={metric} />)}
+        </div>
+      </BentoCard>
+
+      {/* ── 3. Status Card (1x1) — Open to Work ──────────────────────────── */}
+      <BentoCard accent="status" ariaLabelledby="status-title">
+        <header class="flex items-center gap-2">
+          <StatusBeacon color="#50fa7b" label="Currently open to work" />
+          <h2 id="status-title" class="font-mono text-sm uppercase tracking-widest text-status">
+            Open to Work
+          </h2>
+        </header>
+        <p class="text-base font-medium text-text-primary">
+          Targeting VP / Principal / Staff roles in regulated AI platforms.
+        </p>
+        <p class="text-xs text-text-muted">
+          Volunteering for Social Good · long-form review on{' '}
+          <a
+            class="underline decoration-text-muted/40 underline-offset-4 hover:text-status"
+            href="#human-element">Beyond Code</a
+          >.
+        </p>
+        <p class="mt-auto font-mono text-[10px] uppercase tracking-wider text-text-muted">
+          last verified <time datetime="2026-04-15">2026-04-15</time>
+        </p>
+      </BentoCard>
+
+      {/* ── 4. Agentic System Highlight (2x1) ────────────────────────────── */}
+      <BentoCard
+        accent="infra"
+        class="md:col-span-2 lg:col-span-2"
+        badge={featured.badgeLabel}
+        badgeColor={featured.accentColor}
+        href={featured.repoUrl}
+        rel="noopener external"
+        ariaLabelledby="agentic-title"
+      >
+        <header class="flex items-center gap-2">
+          <span aria-hidden="true" class="text-infra">⬢</span>
+          <h2 id="agentic-title" class="font-mono text-base text-infra">
+            {featured.title}
+          </h2>
+        </header>
+        <p class="text-sm text-text-primary">{featured.description}</p>
+        <ul class="mt-auto flex flex-wrap gap-2 pt-2" role="list" aria-label="Project tags">
+          {
+            featured.tags.slice(0, 5).map((tag) => (
+              <li>
+                <TechBadge accent="#8be9fd">{tag}</TechBadge>
+              </li>
+            ))
+          }
+        </ul>
+      </BentoCard>
+
+      {/* ── 5. Infrastructure Highlight (1x1) — Latest ───────────────────── */}
+      <BentoCard
+        accent="infra"
+        badge={latest.badgeLabel}
+        badgeColor={latest.accentColor}
+        href={latest.repoUrl}
+        rel="noopener external"
+        ariaLabelledby="infra-title"
+      >
+        <header class="flex items-center gap-2">
+          <span aria-hidden="true" class="text-infra">∞</span>
+          <h2 id="infra-title" class="font-mono text-base text-infra">{latest.title}</h2>
+        </header>
+        <p class="text-sm text-text-primary">{latest.description}</p>
+        <ul class="mt-auto flex flex-wrap gap-2 pt-2" role="list" aria-label="Project tags">
+          {
+            latest.tags.slice(0, 4).map((tag) => (
+              <li>
+                <TechBadge accent="#8be9fd">{tag}</TechBadge>
+              </li>
+            ))
+          }
+        </ul>
+      </BentoCard>
+
+      {/* ── 6. Human Element (1x1) — Beyond Code ─────────────────────────── */}
+      <BentoCard accent="human" ariaLabelledby="human-title">
+        <header id="human-element" class="flex scroll-mt-24 items-center gap-2">
+          <span aria-hidden="true" class="text-human">♥</span>
+          <h2 id="human-title" class="font-mono text-sm uppercase tracking-widest text-human">
+            Beyond Code
+          </h2>
+        </header>
+        <p class="text-sm font-medium text-text-primary">
+          AI for Social Good · Climate Action · Rational Thinking · Public Policy
+        </p>
+        <p class="text-xs leading-relaxed text-text-muted">
+          "I want to use whatever skills and resources I have to help build a fairer world for
+          everyone — fighting for climate action, standing against racism and inequality, spreading
+          awareness about rational thinking and empathy."
+        </p>
+        <p class="mt-auto font-mono text-xs text-human">
+          Pastry Enthusiast 🥐 · Philosopher · Human
+        </p>
+      </BentoCard>
+
+      {/* ── 7. OSS Upstream Signal (1x1) ─────────────────────────────────── */}
+      <BentoCard accent="status" href="/architecture#oss" ariaLabelledby="oss-title">
+        <header class="flex items-center gap-2">
+          <span aria-hidden="true" class="text-status">↟</span>
+          <h2 id="oss-title" class="font-mono text-sm uppercase tracking-widest text-status">
+            Upstream Contributions
+          </h2>
+        </header>
+        <ul class="flex-1 space-y-1.5 font-mono text-xs text-text-primary" role="list">
+          {
+            upstreamPRs.slice(0, 5).map((pr) => (
+              <li class="flex items-center gap-2">
+                <span aria-hidden="true" class="text-status">
+                  ›
+                </span>
+                <span class="truncate">
+                  {pr.repo} <span class="text-text-muted">#{pr.prNumber}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-2 font-mono text-[11px] text-text-muted">
+          {upstreamPRs.length} merged PRs across MLOps + data infra
+        </p>
+      </BentoCard>
+
+      {/* ── 8. Leadership Signal (1x1) ───────────────────────────────────── */}
+      <BentoCard accent="impact" href="/runtime" ariaLabelledby="leadership-title">
+        <header class="flex items-center gap-2">
+          <span aria-hidden="true" class="text-impact">⌘</span>
+          <h2 id="leadership-title" class="font-mono text-sm uppercase tracking-widest text-impact">
+            Technical Leadership
+          </h2>
+        </header>
+        <p class="text-sm text-text-primary">
+          RFC authorship · ML Guild mentoring · cross-functional Build vs Buy negotiation.
+        </p>
+        <p class="text-xs leading-relaxed text-text-muted">
+          "Hired, onboarded and mentored teams of Data Scientists & ML Engineers across multiple
+          orgs."
+        </p>
+        <p class="mt-auto font-mono text-xs text-impact underline-offset-4 group-hover:underline">
+          full leadership detail per role →
+        </p>
+      </BentoCard>
+    </BentoGrid>
+  </main>
+</BaseLayout>

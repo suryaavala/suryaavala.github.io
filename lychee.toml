@@ -1,0 +1,32 @@
+# Lychee — outbound link checker config.
+# Docs: https://lychee.cli.rs/configuration/
+#
+# The CI job scans `dist/**/*.html` after the Astro build. These settings keep
+# the job honest (all outbound links must be healthy) while tolerating known
+# transient failure modes (rate limits, anchor-only href="#").
+
+max_concurrency = 8
+max_redirects = 5
+timeout = 20
+retry_wait_time = 2
+accept = [200, 206, 429]
+exclude_mail = true
+exclude_loopback = true
+no_progress = true
+
+# Known noisy / transient outbound hosts — warn but don't fail the build.
+exclude = [
+  "^https?://(www\\.)?linkedin\\.com",     # LinkedIn bot-walls public profiles
+  "^https?://twitter\\.com",                # x.com redirects + auth walls
+  "^https?://x\\.com",
+  "^https?://streak-stats\\.demolab\\.com", # GitHub Streak widget is a redirector
+  "^mailto:"
+]
+
+# Skip link-targets that only exist inside the dev server / preview.
+exclude_path = [
+  "node_modules",
+  "playwright-report",
+  "test-results",
+  ".lighthouseci"
+]

@@ -1,0 +1,145 @@
+---
+/**
+ * /runtime — Career Timeline (spec §4.3).
+ *
+ * Reads the typed Experience[] array. Each company gets a Bento card with
+ * metrics (using MetricCard for parity with the homepage) + tech + leadership
+ * highlights. The GitHub Streak widget lives in the footer of this page only,
+ * isolated from the homepage Lighthouse audit (spec §4.3 + CSP allowlist).
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import GradientDivider from '@components/GradientDivider.astro';
+import MetricCard from '@components/MetricCard.astro';
+import TechBadge from '@components/TechBadge.astro';
+
+import { experiences } from '@data/experiences';
+
+const industryAccents: Record<string, string> = {
+  Healthcare: '#ff79c6',
+  Energy: '#50fa7b',
+  Finance: '#8be9fd',
+  'Consumer Tech': '#bd93f9',
+  Consulting: '#f1fa8c'
+};
+---
+
+<BaseLayout
+  title="Runtime — Surya Avala"
+  description="Career timeline across Healthcare, Energy, Finance, Consumer Tech, and Consulting — with quantified metrics, tech, and leadership highlights per role."
+>
+  <main id="main" class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+    <header class="mb-8">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">~/runtime</p>
+      <h1
+        class="mt-2 font-mono text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl"
+      >
+        Career runtime · {experiences.length} roles
+      </h1>
+      <p class="mt-3 max-w-2xl text-sm text-text-muted sm:text-base">
+        Industry × Role × Quantified outcomes. Most-recent first.
+      </p>
+      <GradientDivider spacing="mt-6 mb-0" />
+    </header>
+
+    <ol class="space-y-8 sm:space-y-10" role="list">
+      {
+        experiences.map((exp, i) => {
+          const accent = industryAccents[exp.industry] ?? '#bd93f9';
+          const headingId = `exp-${i}`;
+          return (
+            <li
+              class="rounded-xl border border-border-base/60 bg-bg-surface/60 p-5 transition-all duration-200 hover:border-brand hover:shadow-glow-brand sm:p-6"
+              aria-labelledby={headingId}
+            >
+              <header class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+                <div>
+                  <h2
+                    id={headingId}
+                    class="font-mono text-lg text-text-primary sm:text-xl"
+                    style={`color: ${accent}`}
+                  >
+                    {exp.company}
+                  </h2>
+                  <p class="text-sm text-text-primary">{exp.role}</p>
+                </div>
+                <div class="font-mono text-xs text-text-muted">
+                  <span class="rounded-full border border-border-base/60 px-2 py-0.5">
+                    {exp.industry}
+                  </span>
+                  <span class="ml-2">{exp.period}</span>
+                </div>
+              </header>
+
+              {exp.metrics.length > 0 && (
+                <div class="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {exp.metrics.map((m) => (
+                    <MetricCard metric={m} />
+                  ))}
+                </div>
+              )}
+
+              <div class="grid gap-4 lg:grid-cols-2">
+                <section>
+                  <h3 class="mb-2 font-mono text-xs uppercase tracking-widest text-infra">Tech</h3>
+                  <ul class="flex flex-wrap gap-1.5" role="list">
+                    {exp.techHighlights.map((t) => (
+                      <li>
+                        <TechBadge accent="#8be9fd">{t}</TechBadge>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+                {exp.leadershipHighlights && exp.leadershipHighlights.length > 0 && (
+                  <section>
+                    <h3 class="mb-2 font-mono text-xs uppercase tracking-widest text-impact">
+                      Leadership
+                    </h3>
+                    <ul class="space-y-1.5 text-sm text-text-primary" role="list">
+                      {exp.leadershipHighlights.map((l) => (
+                        <li class="flex items-start gap-2">
+                          <span aria-hidden="true" class="text-impact">
+                            ›
+                          </span>
+                          <span>{l}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+              </div>
+
+              <footer class="mt-4 flex justify-end font-mono text-[10px] uppercase tracking-wider text-text-muted">
+                last verified{' '}
+                <time class="ml-1" datetime={exp.lastVerified}>
+                  {exp.lastVerified}
+                </time>
+              </footer>
+            </li>
+          );
+        })
+      }
+    </ol>
+
+    {/* GitHub Streak Widget — lazy-loaded external image, isolated from homepage */}
+    <section class="mt-16" aria-labelledby="streak-title">
+      <h2
+        id="streak-title"
+        class="mb-3 font-mono text-sm uppercase tracking-widest text-text-muted"
+      >
+        Compute Pulse
+      </h2>
+      <div class="rounded-lg border border-border-base/60 bg-bg-surface/60 p-4">
+        <img
+          src="https://streak-stats.demolab.com?user=suryaavala&theme=onedark&hide_border=true&border_radius=4.8&background=0d1117&ring=bd93f9&fire=ffb86c&currStreakNum=fff&sideNums=fff&currStreakLabel=bd93f9&sideLabels=bd93f9&dates=8be9fd"
+          alt="GitHub commit streak statistics for suryaavala"
+          loading="lazy"
+          decoding="async"
+          width="495"
+          height="195"
+          class="mx-auto h-auto max-w-full"
+        />
+      </div>
+    </section>
+  </main>
+</BaseLayout>

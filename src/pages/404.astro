@@ -1,0 +1,43 @@
+---
+/**
+ * 404 page — terminal-themed, on-brand.
+ *
+ * GitHub Pages serves /404.html for any unknown route, so this single static
+ * page covers all not-found cases without needing a custom server.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import GradientDivider from '@components/GradientDivider.astro';
+---
+
+<BaseLayout
+  title="404 — route not found"
+  description="The requested route was not found on suryaavala.com."
+>
+  <main
+    id="main"
+    class="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-start justify-center px-4 py-16 sm:px-6"
+  >
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">~/404</p>
+    <h1 class="mt-2 font-mono text-5xl font-semibold tracking-tight text-brand sm:text-6xl">
+      404 · route not resolved
+    </h1>
+    <GradientDivider spacing="mt-6 mb-6" />
+    <pre
+      class="overflow-auto rounded-md border border-border-base/60 bg-bg-surface p-4 font-mono text-xs text-text-primary sm:text-sm"><code>$ curl -I https://suryaavala.com{Astro.url.pathname}
+HTTP/1.1 404 Not Found
+content-type: text/html; charset=utf-8
+x-source: github-pages
+x-suggestion: try one of the routes below ↓</code></pre>
+    <ul class="mt-6 space-y-1 font-mono text-sm" role="list">
+      <li><a class="text-text-primary hover:text-brand" href="/">cd /</a></li>
+      <li>
+        <a class="text-text-primary hover:text-brand" href="/architecture">cd /architecture</a>
+      </li>
+      <li><a class="text-text-primary hover:text-brand" href="/runtime">cd /runtime</a></li>
+      <li><a class="text-text-primary hover:text-brand" href="/stack">cd /stack</a></li>
+      <li><a class="text-text-primary hover:text-brand" href="/notes">cd /notes</a></li>
+      <li><a class="text-text-primary hover:text-brand" href="/ping">cd /ping</a></li>
+    </ul>
+  </main>
+</BaseLayout>

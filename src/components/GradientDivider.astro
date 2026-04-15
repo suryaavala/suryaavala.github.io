@@ -1,0 +1,20 @@
+---
+/**
+ * Dracula-rainbow gradient divider (spec §4.1, item 1).
+ *
+ * Used below the Hero card to set the visual grammar of the entire site.
+ * Pure CSS — no JS, no SVG. `aria-hidden` because it carries zero semantic
+ * meaning beyond decoration.
+ */
+
+export interface Props {
+  /** Tailwind utility for vertical margin around the divider. */
+  spacing?: string;
+  /** Height in tailwind sizing units (default `h-px`). */
+  height?: string;
+}
+
+const { spacing = 'my-6', height = 'h-px' } = Astro.props;
+---
+
+<div class:list={['dracula-rainbow w-full opacity-80', height, spacing]} aria-hidden="true"></div>
