@@ -44,10 +44,10 @@ Surya Avala is a Principal AI Systems Architect whose work focuses on MLOps, Dat
 
 The system relies on a strictly decoupled **Local-First / GitOps** pipeline:
 
-1.  **Authoring:** Content is written locally as `.mdx` files in `/src/content/notes/` and `/src/content/architecture/`.
-2.  **Version Control:** Files are committed to Git and pushed to the `main` branch.
-3.  **Build Step:** GitHub Actions triggers `npm run build`. Astro parses the MDX, applies Zod schema validation, injects Svelte components, and compiles to static HTML/CSS.
-4.  **Delivery:** Fully static assets are served globally via the GitHub edge network.
+1. **Authoring:** Content is written locally as `.mdx` files in `/src/content/notes/` and `/src/content/architecture/`.
+2. **Version Control:** Files are committed to Git and pushed to the `main` branch.
+3. **Build Step:** GitHub Actions triggers `npm run build`. Astro parses the MDX, applies Zod schema validation, injects Svelte components, and compiles to static HTML/CSS.
+4. **Delivery:** Fully static assets are served globally via the GitHub edge network.
 
 ---
 
@@ -86,12 +86,12 @@ The aesthetic is a data-dense, minimalist "Bento Grid" utilizing a strict mathem
 
 ### 3.3 Site Map (Multi-Page Routing)
 
-1.  **`/` (Home):** The Bento Grid executive summary.
-2.  **`/architecture`:** Categorized deep-dive into ML pipelines, K8s infra, and open-source upstream PRs.
-3.  **`/notes`:** Docs-as-code engineering blog/research space.
-4.  **`/stack`:** Hardware, CLI tools, and infrastructure configurations.
-5.  **`/runtime`:** Career CV timeline and publications.
-6.  **`/ping`:** Minimalist plaintext contact matrix (GitHub, LinkedIn, Email).
+1. **`/` (Home):** The Bento Grid executive summary.
+2. **`/architecture`:** Categorized deep-dive into ML pipelines, K8s infra, and open-source upstream PRs.
+3. **`/notes`:** Docs-as-code engineering blog/research space.
+4. **`/stack`:** Hardware, CLI tools, and infrastructure configurations.
+5. **`/runtime`:** Career CV timeline and publications.
+6. **`/ping`:** Minimalist plaintext contact matrix (GitHub, LinkedIn, Email).
 
 ---
 
@@ -107,21 +107,21 @@ The aesthetic is a data-dense, minimalist "Bento Grid" utilizing a strict mathem
 
 Projects are hardcoded data objects categorized strictly by domain (extracted from the CV), not chronologically:
 
-1.  _GenAI & Agentic Systems_ (e.g., `scaling-succotash`, `openclaude`)
-2.  _Systems & Infrastructure_ (e.g., `zen_search`, `traffic_counter`)
-3.  _ML & Data Science_ (e.g., `suncorp`, `stockprediction`)
-4.  _Data Engineering & Tooling_ (e.g., `fwfparser`)
+1. _GenAI & Agentic Systems_ (e.g., `scaling-succotash`, `openclaude`)
+2. _Systems & Infrastructure_ (e.g., `zen_search`, `traffic_counter`)
+3. _ML & Data Science_ (e.g., `suncorp`, `stockprediction`)
+4. _Data Engineering & Tooling_ (e.g., `fwfparser`)
 
 ### 4.3 Homepage Bento Logic
 
 The `/` route grid requires exactly 6 semantic nodes based on the CV data:
 
-1.  **Engine (2x2):** Surya Avala, "Principal AI Systems Architect", Stack Pills (Python, C++, K8s, GenAI).
-2.  **Status Card (1x1):** Green Pulse indicator + "Volunteering for Social Good".
-3.  **Metric Card (1x1):** Orange typography highlight -> "93% Clinical NLP Accuracy".
-4.  **Agentic Highlight (2x1):** `scaling-succotash` feature card (GraphRAG, K8s).
-5.  **Infra Highlight (1x1):** `zen_search` feature card.
-6.  **Human Element (1x1):** "Pastry Enthusiast 🥐" card.
+1. **Engine (2x2):** Surya Avala, "Principal AI Systems Architect", Stack Pills (Python, C++, K8s, GenAI).
+2. **Status Card (1x1):** Green Pulse indicator + "Volunteering for Social Good".
+3. **Metric Card (1x1):** Orange typography highlight -> "93% Clinical NLP Accuracy".
+4. **Agentic Highlight (2x1):** `scaling-succotash` feature card (GraphRAG, K8s).
+5. **Infra Highlight (1x1):** `zen_search` feature card.
+6. **Human Element (1x1):** "Pastry Enthusiast 🥐" card.
 
 ---
 
@@ -165,15 +165,15 @@ requiresMath: true # Lazy-loads KaTeX CSS only when true to preserve performance
 
 To honor the MLOps principle of mitigating technical debt over a 6-to-24 month horizon, the site must be mathematically immune to bit-rot in production:
 
-1.  **Strict Dependency Pinning:** All `npm` dependencies in `package.json` will be strictly pinned to exact versions (no `^` or `~` caret operators allowed). This mirrors the philosophy in the `tensorflow/tfx (#3813)` PR.
-2.  **Lockfile Integrity:** `package-lock.json` will be strictly enforced to guarantee deterministic builds.
-3.  **Automated Dependency Management:** Dependabot will be configured via `.github/dependabot.yml` to run monthly, testing updates in isolated PRs.
-4.  **CI Build Gates:** GitHub Actions will run `npx astro check` (TypeScript type-checking & Zod schema validation) and `npm run build` on every PR. If validation fails, the PR turns red and cannot be merged into `main`.
+1. **Strict Dependency Pinning:** All `npm` dependencies in `package.json` will be strictly pinned to exact versions (no `^` or `~` caret operators allowed). This mirrors the philosophy in the `tensorflow/tfx (#3813)` PR.
+2. **Lockfile Integrity:** `package-lock.json` will be strictly enforced to guarantee deterministic builds.
+3. **Automated Dependency Management:** Dependabot will be configured via `.github/dependabot.yml` to run monthly, testing updates in isolated PRs.
+4. **CI Build Gates:** GitHub Actions will run `npx astro check` (TypeScript type-checking & Zod schema validation) and `npm run build` on every PR. If validation fails, the PR turns red and cannot be merged into `main`.
 
 ---
 
 ## 7. Open Questions / Risks (Awaiting Client Confirmation)
 
-1.  **Content Pipeline Sign-off:** This EDD formally specifies **Local MDX** over the Notion API to guarantee zero tech-debt, zero API latency, and version control. _Awaiting final explicit confirmation to abandon the Notion API integration._
-2.  **Light Mode Palette Sign-off:** The "Paper" aesthetic (`#f8f9fa`) is specified for Light Mode to reduce eye strain. _Awaiting final explicit confirmation over a stark pure white (`#ffffff`) background._
-3.  **Domain & DNS Routing:** We are targeting GitHub Pages. _Awaiting confirmation if the final deployment will live at `suryaavala.github.io` natively or if a custom domain (`suryaavala.com`) CNAME needs to be configured in the GitHub settings._
+1. **Content Pipeline Sign-off:** This EDD formally specifies **Local MDX** over the Notion API to guarantee zero tech-debt, zero API latency, and version control. _Awaiting final explicit confirmation to abandon the Notion API integration._
+2. **Light Mode Palette Sign-off:** The "Paper" aesthetic (`#f8f9fa`) is specified for Light Mode to reduce eye strain. _Awaiting final explicit confirmation over a stark pure white (`#ffffff`) background._
+3. **Domain & DNS Routing:** We are targeting GitHub Pages. _Awaiting confirmation if the final deployment will live at `suryaavala.github.io` natively or if a custom domain (`suryaavala.com`) CNAME needs to be configured in the GitHub settings._
