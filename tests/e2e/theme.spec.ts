@@ -9,11 +9,23 @@
 
 import { test, expect } from '@playwright/test';
 
+/**
+ * The ThemeToggle is a `client:load` Svelte island. Its pre-hydration SSR
+ * output is a placeholder glyph (`◐`); after `onMount` runs, Svelte swaps in
+ * the sun/moon SVG AND attaches the click listener. Clicking the pre-hydration
+ * button is a no-op — so every test that interacts with the toggle waits for
+ * this SVG to appear first, which is the definitive hydration signal.
+ */
+const waitForThemeToggleHydrated = async (page: import('@playwright/test').Page) => {
+  await expect(page.locator('header button[aria-label*="theme"] svg')).toBeVisible();
+};
+
 test.describe('Theme toggle', () => {
   test('persists across routes via localStorage', async ({ page }) => {
     await page.goto('/');
     // Start dark by default
     await expect(page.locator('html')).toHaveClass(/dark/);
+    await waitForThemeToggleHydrated(page);
 
     // Toggle to light
     await page.locator('header button[aria-label*="theme"]').click();

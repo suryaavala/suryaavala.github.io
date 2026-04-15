@@ -25,11 +25,15 @@ import TypingHero from '@islands/TypingHero.svelte';
 import { metrics } from '@data/metrics';
 import { projects, upstreamPRs } from '@data/projects';
 
+// Order matters: the first phrase is SSR-rendered as the LCP element, so it
+// must also be the canonical role statement for SEO, a11y (accessible-name
+// algorithm reads H1 text), and screen readers. The animation cycles through
+// the rest.
 const heroPhrases = [
-  'Healthcare · Energy · Fintech · Tech',
-  'Staff Machine Learning Engineer',
   'Principal AI Systems Architect',
+  'Staff Machine Learning Engineer',
   'Engineering Leader',
+  'Healthcare · Energy · Fintech · Tech',
   'Pastry Enthusiast · Human · Philosopher'
 ];
 const initialHeroPhrase = heroPhrases[0]!; // SSR-rendered for LCP discipline

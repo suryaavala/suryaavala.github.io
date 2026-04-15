@@ -21,7 +21,15 @@ test.describe('Navigation', () => {
     }
   });
 
-  test('NavBar exposes every primary route on desktop', async ({ page }) => {
+  test('NavBar exposes every primary route on desktop', async ({ page }, testInfo) => {
+    // The desktop <ul> is `hidden md:flex` — on mobile viewports all 6 routes
+    // live in the horizontal scroller below. Coverage for that surface is
+    // delegated to the `all 6 routes are reachable` test (which clicks into
+    // each) so we skip this visibility assertion on the mobile project.
+    test.skip(
+      testInfo.project.name === 'mobile-chromium',
+      'desktop NavBar is hidden below md breakpoint by design'
+    );
     await page.goto('/');
     for (const route of ROUTES) {
       const link = page.locator(`header nav a[href="${route.href}"]`).first();

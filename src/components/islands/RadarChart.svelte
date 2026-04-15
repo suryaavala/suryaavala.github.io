@@ -52,10 +52,19 @@
   class="relative mx-auto w-full max-w-[460px]"
   aria-label="Competency radar across 8 self-assessed axes"
 >
+  <!--
+    role="group" (not "img") because the SVG contains focusable descendants
+    (each competency node is a tabbable button). axe-core's "aria-allowed-role"
+    rule — and the WCAG 4.1.2 intent behind it — flags role="img" on a subtree
+    with interactive children: an image is supposed to be a single atomic
+    graphic, so nesting focusables inside it is ambiguous to AT. "group" keeps
+    the labelledby association intact while signalling "this is a container of
+    related, individually-focusable elements".
+  -->
   <svg
     viewBox={`0 0 ${size} ${size}`}
     class="h-auto w-full"
-    role="img"
+    role="group"
     aria-labelledby="radar-title radar-desc"
   >
     <title id="radar-title">Competency radar — 8 axes, scores 0–100</title>

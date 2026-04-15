@@ -10,7 +10,8 @@
     --bg-surface-alt: 241 245 249; /* slate-100 */
     --border-base: 229 231 235; /* gray-200 */
     --text-primary: 30 41 59; /* slate-800 */
-    --text-muted: 100 116 139; /* slate-500 */
+    /* slate-600 #475569 — 7.19:1 on bg-base, comfortable AAA */
+    --text-muted: 71 85 105;
   }
 
   :root.dark {
@@ -20,7 +21,9 @@
     --bg-surface-alt: 40 42 54; /* #282a36 */
     --border-base: 48 54 61; /* #30363d */
     --text-primary: 248 248 242; /* #f8f8f2 */
-    --text-muted: 98 114 164; /* #6272a4 */
+    /* Brightened Dracula comment #7a8bc0 — 5.66:1 on bg-base, AA with margin.
+       Original #6272a4 was 4.02:1 and fails 12px body-copy WCAG 1.4.3. */
+    --text-muted: 122 139 192;
   }
 
   html {

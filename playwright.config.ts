@@ -20,7 +20,12 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
-  timeout: 30_000,
+  // 60s (not 30s): axe-core analysis + WebKit context teardown under parallel
+  // workers regularly tips past 30s when 2+ projects hit the same preview
+  // server. We saw 100% of webkit a11y tests time out in teardown at 30s; the
+  // actual assertion time is well under 5s. Keeping the per-expect timeout
+  // tight (5s) still catches real regressions.
+  timeout: 60_000,
   expect: {
     timeout: 5_000,
     toHaveScreenshot: {

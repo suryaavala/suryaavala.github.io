@@ -30,18 +30,33 @@ const {
 const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageURL = new URL(ogImage, Astro.site).toString();
 
-// CSP — meta-tag form. See plan §Key decisions #8 for note re: Cloudflare
-// Transform Rules for stronger HTTP-header CSP.
+// CSP — meta-tag form. See plan §Key decisions #8 + README "Cloudflare
+// Transform Rule" for the stronger HTTP-header CSP that layers on top at the
+// edge. Notes on the relaxed directives below:
+//
+// - `script-src 'self' 'unsafe-inline'`: Astro emits inline bootstrap scripts
+//   for every `client:*` island hydration, and BaseLayout itself ships an
+//   inline FOUC script (read localStorage → toggle .dark before first paint).
+//   A strict `'self'`-only script-src BLOCKS both of those — the site breaks:
+//   no theme toggle, no MetricCounter animation, and axe/Lighthouse
+//   "best-practices" drops because the runtime console is full of CSP errors.
+//   Static-site XSS vector via inline injection is ~nil (no user input makes
+//   it into the rendered HTML), so this trade is correct. The Cloudflare rule
+//   can tighten to hash-based CSP in production.
+//
+// - `frame-ancestors` is dropped: the browser ignores it in a <meta> tag
+//   (only honored from an HTTP header), so including it is noise that trips
+//   Lighthouse CSP audit warnings. It's set by the Cloudflare rule.
 const csp = [
   "default-src 'self'",
   "img-src 'self' data: https://streak-stats.demolab.com",
   "font-src 'self'",
   "style-src 'self' 'unsafe-inline'", // Astro inlines critical CSS
-  "script-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
   "connect-src 'self'",
-  "frame-ancestors 'none'",
   "base-uri 'self'",
-  "form-action 'self'"
+  "form-action 'self'",
+  "object-src 'none'"
 ].join('; ');
 ---
 
