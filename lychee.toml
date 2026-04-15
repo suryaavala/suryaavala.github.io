@@ -10,7 +10,9 @@ max_redirects = 5
 timeout = 20
 retry_wait_time = 2
 accept = [200, 206, 429]
-exclude_mail = true
+# mailto: links are excluded by default in lychee 0.23+ (`include_mail = false`).
+# The old `exclude_mail` key was renamed and is now a parse error if used.
+include_mail = false
 exclude_loopback = true
 no_progress = true
 
