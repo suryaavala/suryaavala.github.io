@@ -8,6 +8,8 @@
 
 **Status:** APPROVED FOR IMPLEMENTATION
 
+**Source:** [gemini](https://gemini.google.com/share/75da85120928)
+
 ---
 
 ## 1. Context & Scope
