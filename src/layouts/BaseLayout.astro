@@ -119,8 +119,8 @@ const csp = [
       (function () {
         try {
           var ls = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var isDark = ls ? ls === 'dark' : prefersDark;
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          var isDark = ls ? ls === 'dark' : !prefersLight;
           document.documentElement.classList.toggle('dark', isDark);
           document.documentElement.classList.toggle('light', !isDark);
         } catch (e) {
