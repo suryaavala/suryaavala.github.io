@@ -11,6 +11,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import GradientDivider from '@components/GradientDivider.astro';
 import TechBadge from '@components/TechBadge.astro';
 import RadarChart from '@islands/RadarChart.svelte';
+import { accentVar } from '@lib/accents';
 
 import { competencyAxes } from '@data/competency';
 import { stackCategories } from '@data/stack';
@@ -84,17 +85,17 @@ import { stackCategories } from '@data/stack';
           stackCategories.map((cat) => (
             <article
               class="rounded-lg border border-border-base/60 bg-bg-surface/60 p-5 transition-all duration-200 hover:border-stack hover:shadow-glow-impact"
-              style={`--cat-accent: ${cat.accent}`}
+              style={`--cat-accent: var(--accent-${cat.accent})`}
             >
               <header class="mb-3 flex items-center gap-2">
                 <span
                   aria-hidden="true"
                   class="inline-block h-2 w-2 rounded-full"
-                  style={`background-color: ${cat.accent}`}
+                  style={`background-color: ${accentVar(cat.accent)}`}
                 />
                 <h3
                   class="font-mono text-sm uppercase tracking-widest"
-                  style={`color: ${cat.accent}`}
+                  style={`color: ${accentVar(cat.accent)}`}
                 >
                   {cat.name}
                 </h3>

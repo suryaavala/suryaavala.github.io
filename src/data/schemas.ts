@@ -8,13 +8,11 @@
  */
 
 import { z } from 'zod';
+import { ACCENT_TOKENS } from '@lib/accents';
 
-const HEX_COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
-export const HexColor = z
-  .string()
-  .regex(HEX_COLOR_REGEX, 'must be a 6-digit hex colour, e.g. "#bd93f9"');
+export const AccentTokenSchema = z.enum(ACCENT_TOKENS);
 export const IsoDate = z.string().regex(ISO_DATE_REGEX, 'must be ISO date YYYY-MM-DD');
 
 export const ConfidenceBoundSchema = z.object({
@@ -30,7 +28,7 @@ export const MetricSchema = z.object({
   context: z.string().min(5, 'Context must identify the company/project'),
   methodology: z.string().min(10, 'Methodology must explain measurement approach').optional(),
   confidenceBound: ConfidenceBoundSchema.optional(),
-  accent: HexColor
+  accent: AccentTokenSchema
 });
 
 export const ExperienceSchema = z.object({
@@ -59,7 +57,7 @@ export const ProjectSchema = z.object({
   domain: ProjectDomain,
   repoUrl: z.string().url(),
   tags: z.array(z.string()).min(1).max(8),
-  accentColor: HexColor,
+  accentColor: AccentTokenSchema,
   featured: z.boolean(),
   badgeLabel: z.enum(['Featured', 'Latest']).optional()
 });
@@ -72,7 +70,7 @@ export const CompetencyAxisSchema = z.object({
 
 export const StackCategorySchema = z.object({
   name: z.string().min(1),
-  accent: HexColor,
+  accent: AccentTokenSchema,
   items: z.array(z.string()).min(1)
 });
 

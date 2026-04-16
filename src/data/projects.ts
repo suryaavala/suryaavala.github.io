@@ -18,7 +18,7 @@ export const projects: Project[] = [
     domain: 'GenAI & Agentic Systems',
     repoUrl: 'https://github.com/suryaavala/scaling-succotash',
     tags: ['GraphRAG', 'LangGraph', 'Kubernetes', 'Celery', 'Circuit Breakers'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: true,
     badgeLabel: 'Featured'
   },
@@ -30,7 +30,7 @@ export const projects: Project[] = [
     domain: 'GenAI & Agentic Systems',
     repoUrl: 'https://github.com/suryaavala/openclaude',
     tags: ['Multi-Agent', 'LangChain', 'Guardrails'],
-    accentColor: '#bd93f9',
+    accentColor: 'brand',
     featured: false
   },
 
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     domain: 'Systems & Infrastructure',
     repoUrl: 'https://github.com/suryaavala/traffic_counter',
     tags: ['Python', 'Systems', 'O(1)', 'CPython'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: true,
     badgeLabel: 'Latest'
   },
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     domain: 'Systems & Infrastructure',
     repoUrl: 'https://github.com/suryaavala/decloud',
     tags: ['FinOps', 'Cloud', 'Cost Optimisation'],
-    accentColor: '#ffb86c',
+    accentColor: 'impact',
     featured: false
   },
   {
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     domain: 'Systems & Infrastructure',
     repoUrl: 'https://github.com/suryaavala/advancedcpp',
     tags: ['C++', 'Templates', 'Systems'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: false
   },
 
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     domain: 'ML & Data Science',
     repoUrl: 'https://github.com/suryaavala/suncorp',
     tags: ['Insurance', 'Classification'],
-    accentColor: '#f1fa8c',
+    accentColor: 'stack',
     featured: false
   },
   {
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     domain: 'ML & Data Science',
     repoUrl: 'https://github.com/suryaavala/stockprediction',
     tags: ['Time-Series', 'Forecasting'],
-    accentColor: '#f1fa8c',
+    accentColor: 'stack',
     featured: false
   },
   {
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     domain: 'ML & Data Science',
     repoUrl: 'https://github.com/suryaavala/som',
     tags: ['SOM', 'Unsupervised', 'Math'],
-    accentColor: '#bd93f9',
+    accentColor: 'brand',
     featured: false
   },
   {
@@ -107,7 +107,7 @@ export const projects: Project[] = [
     domain: 'ML & Data Science',
     repoUrl: 'https://github.com/suryaavala/prodr',
     tags: ['R', 'Production', 'Bridging'],
-    accentColor: '#f1fa8c',
+    accentColor: 'stack',
     featured: false
   },
   {
@@ -117,7 +117,7 @@ export const projects: Project[] = [
     domain: 'ML & Data Science',
     repoUrl: 'https://github.com/suryaavala/legimages',
     tags: ['Computer Vision', 'Composable'],
-    accentColor: '#f1fa8c',
+    accentColor: 'stack',
     featured: false
   },
 
@@ -129,7 +129,7 @@ export const projects: Project[] = [
     domain: 'Data Engineering & Tooling',
     repoUrl: 'https://github.com/suryaavala/zen_search',
     tags: ['Search', 'Indexing', 'Performance'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: false
   },
   {
@@ -139,7 +139,7 @@ export const projects: Project[] = [
     domain: 'Data Engineering & Tooling',
     repoUrl: 'https://github.com/suryaavala/fwfparser',
     tags: ['Parser', 'Streaming'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: false
   },
   {
@@ -149,7 +149,7 @@ export const projects: Project[] = [
     domain: 'Data Engineering & Tooling',
     repoUrl: 'https://github.com/suryaavala/ah_chambers_of_law',
     tags: ['Legal NLP', 'Extraction'],
-    accentColor: '#ff79c6',
+    accentColor: 'human',
     featured: false
   },
   {
@@ -159,7 +159,7 @@ export const projects: Project[] = [
     domain: 'Data Engineering & Tooling',
     repoUrl: 'https://github.com/suryaavala/template_cookiecutter',
     tags: ['Tooling', 'Scaffolding'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: false
   },
 
@@ -172,7 +172,7 @@ export const projects: Project[] = [
     domain: 'Enterprise ML & Document Intelligence',
     repoUrl: 'https://github.com/suryaavala/suryaavala.github.io',
     tags: ['Fraud', 'Kubeflow', 'GKE', 'Enterprise'],
-    accentColor: '#ffb86c',
+    accentColor: 'impact',
     featured: false
   },
   {
@@ -182,7 +182,7 @@ export const projects: Project[] = [
     domain: 'Enterprise ML & Document Intelligence',
     repoUrl: 'https://github.com/suryaavala/suryaavala.github.io',
     tags: ['NLU', 'Healthcare', 'Chatbot'],
-    accentColor: '#ff79c6',
+    accentColor: 'human',
     featured: false
   },
   {
@@ -192,7 +192,7 @@ export const projects: Project[] = [
     domain: 'Enterprise ML & Document Intelligence',
     repoUrl: 'https://github.com/suryaavala/suryaavala.github.io',
     tags: ['SageMaker', 'AWS', 'Healthcare'],
-    accentColor: '#8be9fd',
+    accentColor: 'infra',
     featured: false
   },
   {
@@ -203,7 +203,7 @@ export const projects: Project[] = [
     domain: 'Enterprise ML & Document Intelligence',
     repoUrl: 'https://github.com/suryaavala/suryaavala.github.io',
     tags: ['Document Mining', 'NLP', 'Framework'],
-    accentColor: '#bd93f9',
+    accentColor: 'brand',
     featured: false
   },
   {
@@ -214,7 +214,7 @@ export const projects: Project[] = [
     domain: 'Enterprise ML & Document Intelligence',
     repoUrl: 'https://github.com/suryaavala/suryaavala.github.io',
     tags: ['Sports Analytics', 'Competition'],
-    accentColor: '#bd93f9',
+    accentColor: 'brand',
     featured: false
   }
 ];

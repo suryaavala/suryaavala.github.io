@@ -56,12 +56,17 @@ export default {
         bento: 'minmax(220px, auto)'
       },
       boxShadow: {
-        glow: '0 0 0 1px rgb(var(--border-base) / 0.6), 0 0 32px -8px rgb(189 147 249 / 0.25)',
-        'glow-brand': '0 0 0 1px #bd93f9, 0 0 32px -8px rgb(189 147 249 / 0.45)',
-        'glow-infra': '0 0 0 1px #8be9fd, 0 0 32px -8px rgb(139 233 253 / 0.45)',
-        'glow-impact': '0 0 0 1px #ffb86c, 0 0 32px -8px rgb(255 184 108 / 0.45)',
-        'glow-human': '0 0 0 1px #ff79c6, 0 0 32px -8px rgb(255 121 198 / 0.45)',
-        'glow-status': '0 0 0 1px #50fa7b, 0 0 32px -8px rgb(80 250 123 / 0.45)'
+        glow: '0 0 0 1px rgb(var(--border-base) / 0.6), 0 0 32px -8px rgb(var(--accent-brand) / 0.25)',
+        'glow-brand':
+          '0 0 0 1px rgb(var(--accent-brand)), 0 0 32px -8px rgb(var(--accent-brand) / 0.45)',
+        'glow-infra':
+          '0 0 0 1px rgb(var(--accent-infra)), 0 0 32px -8px rgb(var(--accent-infra) / 0.45)',
+        'glow-impact':
+          '0 0 0 1px rgb(var(--accent-impact)), 0 0 32px -8px rgb(var(--accent-impact) / 0.45)',
+        'glow-human':
+          '0 0 0 1px rgb(var(--accent-human)), 0 0 32px -8px rgb(var(--accent-human) / 0.45)',
+        'glow-status':
+          '0 0 0 1px rgb(var(--accent-status)), 0 0 32px -8px rgb(var(--accent-status) / 0.45)'
       },
       animation: {
         'typing-caret': 'caret 1s steps(2) infinite',

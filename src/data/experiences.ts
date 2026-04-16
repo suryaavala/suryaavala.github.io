@@ -21,7 +21,7 @@ export const experiences: Experience[] = [
         label: 'reduction in feature lead times across the GCP ML platform',
         context: 'Montu — GCP ML Platform',
         methodology: 'DORA metrics, pre/post Kubeflow + GitOps migration',
-        accent: '#ffb86c'
+        accent: 'impact'
       },
       {
         value: '97%+',
@@ -29,14 +29,14 @@ export const experiences: Experience[] = [
         label: 'reduction in change-failure rate after platform consolidation',
         context: 'Montu — DORA Outcomes',
         methodology: 'Incident DB diff, 6-month rolling',
-        accent: '#ffb86c'
+        accent: 'impact'
       },
       {
         value: '93%',
         label: 'clinical NLP accuracy (outperforming Google Healthcare NLP by 14 pts)',
         context: 'Montu — Clinical Document Intelligence',
         methodology: 'Held-out clinician-labelled validation set',
-        accent: '#ffb86c'
+        accent: 'impact'
       },
       {
         value: '0.87+',
@@ -44,7 +44,7 @@ export const experiences: Experience[] = [
         label: 'F1 PII redaction score on clinical log sanitisation',
         context: 'Montu — Privacy-by-Design Logging',
         methodology: 'Held-out clinician-annotated PII corpus, micro-F1',
-        accent: '#ffb86c'
+        accent: 'impact'
       }
     ],
     techHighlights: [
@@ -73,7 +73,7 @@ export const experiences: Experience[] = [
         label: 'average infrastructure cost optimisation across 10k+ energy sites',
         context: 'Amber — Energy Forecasting Platform',
         methodology: 'GCP billing diff, 6-month rolling, post-FinOps refactor',
-        accent: '#ffb86c'
+        accent: 'impact'
       }
     ],
     techHighlights: [
@@ -100,7 +100,7 @@ export const experiences: Experience[] = [
         label: 'link adoption gains via the personalised link-recommender',
         context: 'Linktree — Two-Tower Recommender',
         methodology: 'A/B test, 30-day window, user-cohort holdout',
-        accent: '#ffb86c'
+        accent: 'impact'
       },
       {
         value: '18-23%',
@@ -108,7 +108,7 @@ export const experiences: Experience[] = [
         label: 'profile subscription uplift across recommender experiments',
         context: 'Linktree — Profile Subscriptions',
         methodology: 'A/B uplift, 90-day cohort',
-        accent: '#ffb86c'
+        accent: 'impact'
       }
     ],
     techHighlights: [
@@ -134,7 +134,7 @@ export const experiences: Experience[] = [
         label: 'enterprise identity fraud detection on Kubeflow / GKE',
         context: 'ANZ — Enterprise ML Platform',
         methodology: 'Production deploy across multiple business units',
-        accent: '#8be9fd'
+        accent: 'infra'
       }
     ],
     techHighlights: [
@@ -155,7 +155,7 @@ export const experiences: Experience[] = [
         value: 'Platform',
         label: 'SageMaker platform extensions powering claims ML workloads',
         context: 'nib — ML Infrastructure',
-        accent: '#8be9fd'
+        accent: 'infra'
       }
     ],
     techHighlights: [
@@ -175,7 +175,7 @@ export const experiences: Experience[] = [
         value: 'Live',
         label: 'customer-request triaging chatbot in clinical operations',
         context: 'HammondCare — Triaging Chatbot',
-        accent: '#8be9fd'
+        accent: 'infra'
       }
     ],
     techHighlights: [
@@ -195,13 +195,13 @@ export const experiences: Experience[] = [
         value: '2nd',
         label: 'place at Cricket Australia DataJam 2020 (cross-functional team lead)',
         context: 'Eliiza — Cricket Australia DataJam',
-        accent: '#bd93f9'
+        accent: 'brand'
       },
       {
         value: 'Framework',
         label: '"Thea" document mining framework adopted across consulting engagements',
         context: 'Eliiza — Thea Document Mining',
-        accent: '#8be9fd'
+        accent: 'infra'
       }
     ],
     techHighlights: [

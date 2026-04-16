@@ -11,6 +11,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import BentoCard from '@components/BentoCard.astro';
 import TechBadge from '@components/TechBadge.astro';
 import GradientDivider from '@components/GradientDivider.astro';
+import { accentVar } from '@lib/accents';
 
 import { projects, upstreamPRs } from '@data/projects';
 import { ProjectDomain } from '@data/schemas';
@@ -72,13 +73,12 @@ const accentForDomain: Record<string, 'brand' | 'infra' | 'impact' | 'human' | '
                 href={project.repoUrl}
                 rel="noopener external"
                 badge={project.badgeLabel}
-                badgeColor={project.accentColor}
                 ariaLabelledby={`project-${project.slug}`}
               >
                 <h3
                   id={`project-${project.slug}`}
                   class="font-mono text-base text-text-primary"
-                  style={`color: ${project.accentColor}`}
+                  style={`color: ${accentVar(project.accentColor)}`}
                 >
                   {project.title}
                 </h3>

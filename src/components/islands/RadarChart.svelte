@@ -82,7 +82,7 @@
           })
           .join(' ')}
         fill="none"
-        stroke="rgba(255,255,255,0.08)"
+        stroke="rgb(var(--text-primary) / 0.08)"
         stroke-width="1"
       />
     {/each}
@@ -94,7 +94,7 @@
         y1={center}
         x2={s.x}
         y2={s.y}
-        stroke="rgba(255,255,255,0.06)"
+        stroke="rgb(var(--text-primary) / 0.06)"
         stroke-width="1"
       />
     {/each}
@@ -102,8 +102,8 @@
     <!-- Data polygon -->
     <polygon
       points={dataPoints}
-      fill="rgba(189,147,249,0.30)"
-      stroke="#bd93f9"
+      fill="rgb(var(--accent-brand) / 0.30)"
+      stroke="rgb(var(--accent-brand))"
       stroke-width="2"
       stroke-linejoin="round"
     />
@@ -114,8 +114,8 @@
         cx={m.x}
         cy={m.y}
         r={activeIndex === i ? 6 : 4}
-        fill="#f1fa8c"
-        stroke="#0d1117"
+        fill="rgb(var(--accent-stack))"
+        stroke="rgb(var(--bg-base))"
         stroke-width="1.5"
         on:mouseenter={() => (activeIndex = i)}
         on:mouseleave={() => (activeIndex = null)}
@@ -137,7 +137,7 @@
         dominant-baseline="middle"
         class="font-mono"
         font-size="10"
-        fill={activeIndex === i ? '#bd93f9' : '#8be9fd'}
+        fill={activeIndex === i ? 'rgb(var(--accent-brand))' : 'rgb(var(--accent-infra))'}
       >
         {l.label}
       </text>
@@ -148,7 +148,7 @@
         dominant-baseline="middle"
         class="font-mono"
         font-size="9"
-        fill="rgb(98,114,164)"
+        fill="rgb(var(--text-muted))"
       >
         {l.score}/100
       </text>

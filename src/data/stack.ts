@@ -10,7 +10,7 @@ import type { StackCategory } from './schemas';
 export const stackCategories: StackCategory[] = [
   {
     name: 'Languages & CS Primitives',
-    accent: '#8be9fd',
+    accent: 'infra',
     items: [
       'Python (Asyncio, Metaprogramming)',
       'C / C++',
@@ -22,7 +22,7 @@ export const stackCategories: StackCategory[] = [
   },
   {
     name: 'AI/ML & HPC',
-    accent: '#ffb86c',
+    accent: 'impact',
     items: [
       'PyTorch',
       'TensorFlow',
@@ -37,7 +37,7 @@ export const stackCategories: StackCategory[] = [
   },
   {
     name: 'Agentic & GenAI',
-    accent: '#bd93f9',
+    accent: 'brand',
     items: [
       'LangChain',
       'LangGraph',
@@ -55,7 +55,7 @@ export const stackCategories: StackCategory[] = [
   },
   {
     name: 'MLOps & Data Engineering',
-    accent: '#50fa7b',
+    accent: 'status',
     items: [
       'Kubeflow',
       'ClearML',
@@ -74,7 +74,7 @@ export const stackCategories: StackCategory[] = [
   },
   {
     name: 'Cloud & Infrastructure',
-    accent: '#8be9fd',
+    accent: 'infra',
     items: [
       'GCP (GKE, Cloud Run, VertexAI, Pub/Sub)',
       'AWS (EKS, SageMaker, Lambda, DynamoDB)',
@@ -88,7 +88,7 @@ export const stackCategories: StackCategory[] = [
   },
   {
     name: 'Advanced DL Paradigms',
-    accent: '#ff79c6',
+    accent: 'human',
     items: [
       'PEFT (LoRA / QLoRA)',
       'RLHF (PPO / DPO)',
@@ -98,7 +98,7 @@ export const stackCategories: StackCategory[] = [
   },
   {
     name: 'Systems Architecture & Theory',
-    accent: '#f1fa8c',
+    accent: 'stack',
     items: [
       'Distributed Systems Theory (CAP, PACELC, Paxos / Raft)',
       'Event-Driven Architecture',
