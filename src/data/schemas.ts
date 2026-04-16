@@ -27,6 +27,7 @@ export const MetricSchema = z.object({
   label: z.string().min(10, 'Metric label must be descriptive (≥10 chars)'),
   context: z.string().min(5, 'Context must identify the company/project'),
   methodology: z.string().min(10, 'Methodology must explain measurement approach').optional(),
+  narrative: z.string().min(10, 'Narrative must explain the engineering decision').optional(),
   confidenceBound: ConfidenceBoundSchema.optional(),
   accent: AccentTokenSchema
 });

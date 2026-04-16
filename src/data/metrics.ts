@@ -22,6 +22,8 @@ export const metrics: Metric[] = [
     label: 'reduction in feature lead times across the GCP ML platform',
     context: 'Montu — Healthcare ML Platform (2023–2025)',
     methodology: 'DORA metrics, measured pre/post Kubeflow + GitOps platform migration',
+    narrative:
+      'Replaced sprawling notebook-to-production pipeline with Kubeflow + GitOps, turning sprint-length deploys into same-day ships.',
     accent: 'impact'
   },
   {
@@ -30,6 +32,8 @@ export const metrics: Metric[] = [
     label: 'clinical NLP accuracy — outperforming Google Healthcare NLP by 14 points',
     context: 'Montu — Clinical Document Intelligence',
     methodology: 'Held-out clinician-labelled validation set, 5-fold cross-validation',
+    narrative:
+      'Built custom clinical NLP pipeline outperforming Google Healthcare NLP on domain-specific medical text extraction.',
     accent: 'impact'
   },
   {
@@ -38,6 +42,8 @@ export const metrics: Metric[] = [
     label: 'average infrastructure cost reduction across 10k+ energy sites',
     context: 'Amber — Energy Forecasting Platform (2021–2023)',
     methodology: 'GCP billing diff over 6-month rolling window post-FinOps refactor',
+    narrative:
+      'Designed event-driven FinOps architecture for 10k+ energy sites, eliminating redundant compute and cold-path waste.',
     accent: 'impact'
   },
   {
@@ -46,6 +52,8 @@ export const metrics: Metric[] = [
     label: 'clinician adoption of the prescription recommender (100k+ patients)',
     context: 'Montu — Two-Tower Recommender System',
     methodology: 'Active-user telemetry / total clinicians eligible, 90-day rolling window',
+    narrative:
+      'Hybrid two-tower recommender personalising prescriptions for 100k+ recurring patients with clinician-in-the-loop feedback.',
     confidenceBound: {
       lower: '68.1%',
       upper: '74.5%',
@@ -59,6 +67,8 @@ export const metrics: Metric[] = [
     label: 'clinician case reviews automated by the care quality assessment pipeline',
     context: 'Montu — Care Quality Assessment',
     methodology: 'Automated-review count / total reviews, monthly rolling',
+    narrative:
+      'Automated clinician case review pipeline combining structured extraction with quality scoring, freeing clinical hours.',
     accent: 'impact'
   },
   {
@@ -67,6 +77,8 @@ export const metrics: Metric[] = [
     label: 'F1 PII redaction score on clinical log sanitisation',
     context: 'Montu — Privacy-by-Design Logging',
     methodology: 'Held-out clinician-annotated PII corpus, micro-averaged F1',
+    narrative:
+      'Privacy-by-Design log sanitisation with tuned NER model, ensuring clinical inputs never leak PII to downstream systems.',
     accent: 'impact'
   }
 ];

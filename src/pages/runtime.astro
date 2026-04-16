@@ -47,7 +47,7 @@ const industryAccents: Record<string, AccentToken> = {
     <ol class="space-y-8 sm:space-y-10" role="list">
       {
         experiences.map((exp, i) => {
-          const accent = industryAccents[exp.industry] ?? 'brand' as AccentToken;
+          const accent = industryAccents[exp.industry] ?? ('brand' as AccentToken);
           const headingId = `exp-${i}`;
           return (
             <li

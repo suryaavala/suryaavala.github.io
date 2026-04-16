@@ -18,7 +18,8 @@ export interface Props {
 }
 
 const { metric } = Astro.props;
-const { value, direction, label, context, methodology, confidenceBound, accent } = metric;
+const { value, direction, label, context, methodology, narrative, confidenceBound, accent } =
+  metric;
 const accentCss = accentVar(accent);
 
 const directionLabel = direction === '↑' ? 'increase' : direction === '↓' ? 'decrease' : 'measured';
@@ -49,6 +50,8 @@ const a11yLabel = `${value} ${directionLabel}: ${label}`;
   <p class="text-sm leading-snug text-text-primary">{label}</p>
 
   <p class="font-mono text-[11px] uppercase tracking-wide text-infra">{context}</p>
+
+  {narrative && <p class="text-xs leading-snug text-text-muted">{narrative}</p>}
 
   {
     confidenceBound && (

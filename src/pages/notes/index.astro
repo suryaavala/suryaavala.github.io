@@ -55,7 +55,7 @@ const categoryAccents: Record<string, AccentToken> = {
     <ul class="space-y-4" role="list">
       {
         notes.map((note) => {
-          const accent = categoryAccents[note.data.category] ?? 'brand' as AccentToken;
+          const accent = categoryAccents[note.data.category] ?? ('brand' as AccentToken);
           const dateISO = note.data.publishDate.toISOString().slice(0, 10);
           const dateLabel = note.data.publishDate.toLocaleDateString('en-AU', {
             year: 'numeric',
