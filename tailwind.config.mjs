@@ -15,18 +15,17 @@ export default {
         'text-primary': 'rgb(var(--text-primary) / <alpha-value>)',
         'text-muted': 'rgb(var(--text-muted) / <alpha-value>)',
 
-        // Dracula semantic accents
+        // Theme-aware semantic accents (CSS vars switch in global.css)
         brand: {
-          // Purple — links, hero, brand. body-size uses lightened variant
-          DEFAULT: '#bd93f9',
-          body: '#c4a0ff'
+          DEFAULT: 'rgb(var(--accent-brand) / <alpha-value>)',
+          body: 'rgb(var(--accent-brand-body) / <alpha-value>)'
         },
-        status: '#50fa7b', // Green — availability, OSS
-        infra: '#8be9fd', // Cyan — infrastructure tags
-        impact: '#ffb86c', // Orange — metrics, CTA
-        human: '#ff79c6', // Pink — philosophy, social good
-        stack: '#f1fa8c', // Yellow — tech stack tags
-        danger: '#ff5555' // Red — errors, destructive
+        status: 'rgb(var(--accent-status) / <alpha-value>)',
+        infra: 'rgb(var(--accent-infra) / <alpha-value>)',
+        impact: 'rgb(var(--accent-impact) / <alpha-value>)',
+        human: 'rgb(var(--accent-human) / <alpha-value>)',
+        stack: 'rgb(var(--accent-stack) / <alpha-value>)',
+        danger: 'rgb(var(--accent-danger) / <alpha-value>)'
       },
       fontFamily: {
         sans: [
@@ -83,11 +82,11 @@ export default {
           css: {
             '--tw-prose-body': 'rgb(var(--text-primary))',
             '--tw-prose-headings': 'rgb(var(--text-primary))',
-            '--tw-prose-links': '#c4a0ff',
+            '--tw-prose-links': 'rgb(var(--accent-brand-body))',
             '--tw-prose-bold': 'rgb(var(--text-primary))',
-            '--tw-prose-code': '#f1fa8c',
-            '--tw-prose-pre-bg': '#161b22',
-            '--tw-prose-pre-code': '#f8f8f2',
+            '--tw-prose-code': 'rgb(var(--accent-stack))',
+            '--tw-prose-pre-bg': 'rgb(var(--bg-surface))',
+            '--tw-prose-pre-code': 'rgb(var(--text-primary))',
             '--tw-prose-quotes': 'rgb(var(--text-muted))',
             '--tw-prose-hr': 'rgb(var(--border-base))',
             'code::before': { content: '""' },
