@@ -5,7 +5,7 @@
 import { test, expect } from '@playwright/test';
 
 const ROUTES = [
-  { href: '/', heading: /Principal AI Systems Architect|Surya Avala/ },
+  { href: '/', heading: /Staff Machine Learning Engineer|Surya Avala/ },
   { href: '/architecture', heading: /Portfolio · categorised by domain/ },
   { href: '/runtime', heading: /Career runtime/ },
   { href: '/stack', heading: /Infrastructure stack & competency radar/ },
