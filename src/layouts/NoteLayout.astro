@@ -74,9 +74,11 @@ const publishDateLabel = data.publishDate.toLocaleDateString('en-AU', {
       <slot />
     </div>
 
-    {/* Shiki github-dark-dimmed comment colour #768390 has only 3.87:1 on its
+    {
+      /* Shiki github-dark-dimmed comment colour #768390 has only 3.87:1 on its
         background #22272e — fails WCAG 1.4.3 AA at 14px. Brighten to #8b949e
-        (4.98:1, the non-dimmed github-dark comment colour). */}
+        (4.98:1, the non-dimmed github-dark comment colour). */
+    }
     <style is:global>
       .astro-code span[style*='#768390'] {
         color: #8b949e !important;
