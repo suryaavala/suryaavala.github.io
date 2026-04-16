@@ -7,14 +7,18 @@
  * keyframe defined in tailwind.config.mjs.
  */
 
+import { accentVar } from '@lib/accents';
+import type { AccentToken } from '@lib/accents';
+
 export interface Props {
-  /** Hex token for the beacon (status green by default). */
-  color?: string;
+  /** Semantic accent token for the beacon (status green by default). */
+  color?: AccentToken;
   /** Accessible label exposed to screen readers. */
   label?: string;
 }
 
-const { color = '#50fa7b', label = 'Currently available' } = Astro.props;
+const { color = 'status', label = 'Currently available' } = Astro.props;
+
 ---
 
 <span
@@ -25,9 +29,9 @@ const { color = '#50fa7b', label = 'Currently available' } = Astro.props;
   <span
     aria-hidden="true"
     class="absolute inline-flex h-full w-full rounded-full opacity-75 motion-safe:animate-pulse-ring"
-    style={`background-color: ${color}`}></span>
+    style={`background-color: ${accentVar(color)}`}></span>
   <span
     aria-hidden="true"
     class="relative inline-flex h-2.5 w-2.5 rounded-full"
-    style={`background-color: ${color}`}></span>
+    style={`background-color: ${accentVar(color)}`}></span>
 </span>

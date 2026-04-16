@@ -14,13 +14,15 @@ import MetricCard from '@components/MetricCard.astro';
 import TechBadge from '@components/TechBadge.astro';
 
 import { experiences } from '@data/experiences';
+import { accentVar } from '@lib/accents';
+import type { AccentToken } from '@lib/accents';
 
-const industryAccents: Record<string, string> = {
-  Healthcare: '#ff79c6',
-  Energy: '#50fa7b',
-  Finance: '#8be9fd',
-  'Consumer Tech': '#bd93f9',
-  Consulting: '#f1fa8c'
+const industryAccents: Record<string, AccentToken> = {
+  Healthcare: 'human',
+  Energy: 'status',
+  Finance: 'infra',
+  'Consumer Tech': 'brand',
+  Consulting: 'stack'
 };
 ---
 
@@ -45,7 +47,7 @@ const industryAccents: Record<string, string> = {
     <ol class="space-y-8 sm:space-y-10" role="list">
       {
         experiences.map((exp, i) => {
-          const accent = industryAccents[exp.industry] ?? '#bd93f9';
+          const accent = industryAccents[exp.industry] ?? 'brand' as AccentToken;
           const headingId = `exp-${i}`;
           return (
             <li
@@ -57,7 +59,7 @@ const industryAccents: Record<string, string> = {
                   <h2
                     id={headingId}
                     class="font-mono text-lg text-text-primary sm:text-xl"
-                    style={`color: ${accent}`}
+                    style={`color: ${accentVar(accent)}`}
                   >
                     {exp.company}
                   </h2>
@@ -85,7 +87,7 @@ const industryAccents: Record<string, string> = {
                   <ul class="flex flex-wrap gap-1.5" role="list">
                     {exp.techHighlights.map((t) => (
                       <li>
-                        <TechBadge accent="#8be9fd">{t}</TechBadge>
+                        <TechBadge accent="infra">{t}</TechBadge>
                       </li>
                     ))}
                   </ul>

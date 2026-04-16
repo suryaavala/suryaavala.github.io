@@ -35,7 +35,7 @@
        Original #6272a4 was 4.02:1 and fails 12px body-copy WCAG 1.4.3. */
     --text-muted: 122 139 192;
 
-    /* Dracula accent colors */
+    /* Dracula accent palette — vivid on dark backgrounds */
     --accent-brand: 189 147 249; /* #bd93f9 */
     --accent-brand-body: 196 160 255; /* #c4a0ff */
     --accent-status: 80 250 123; /* #50fa7b */
@@ -59,7 +59,7 @@
 
   ::selection {
     background-color: rgb(var(--accent-brand));
-    color: #0d1117;
+    color: rgb(var(--bg-base));
   }
 
   /* Respect reduced motion */
@@ -86,13 +86,13 @@
   .dracula-rainbow {
     background: linear-gradient(
       90deg,
-      #ff5555 0%,
-      #ffb86c 16%,
-      #f1fa8c 33%,
-      #50fa7b 50%,
-      #8be9fd 66%,
-      #bd93f9 83%,
-      #ff79c6 100%
+      rgb(var(--accent-danger)) 0%,
+      rgb(var(--accent-impact)) 16%,
+      rgb(var(--accent-stack)) 33%,
+      rgb(var(--accent-status)) 50%,
+      rgb(var(--accent-infra)) 66%,
+      rgb(var(--accent-brand)) 83%,
+      rgb(var(--accent-human)) 100%
     );
   }
 

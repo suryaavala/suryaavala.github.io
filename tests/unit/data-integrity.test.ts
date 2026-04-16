@@ -31,7 +31,7 @@ describe('MetricSchema', () => {
     });
   });
 
-  it('rejects a metric with non-hex accent', () => {
+  it('rejects a metric with invalid accent token', () => {
     expect(() =>
       MetricSchema.parse({
         value: '99%',
@@ -39,7 +39,7 @@ describe('MetricSchema', () => {
         context: 'a real context',
         accent: 'orangish'
       })
-    ).toThrow(/hex/);
+    ).toThrow();
   });
 
   it('rejects a metric with too-short label', () => {
@@ -48,7 +48,7 @@ describe('MetricSchema', () => {
         value: '99%',
         label: 'short',
         context: 'a real context',
-        accent: '#ffb86c'
+        accent: 'impact'
       })
     ).toThrow(/≥10/);
   });
@@ -61,7 +61,7 @@ describe('MetricSchema', () => {
         context: 'a real context',
         methodology: 'Bootstrapped over weekly cohorts',
         confidenceBound: { lower: '68%', upper: '75%', note: '95% CI' },
-        accent: '#ffb86c'
+        accent: 'impact'
       })
     ).not.toThrow();
   });
@@ -89,7 +89,7 @@ describe('ExperienceSchema', () => {
             value: '50%',
             label: 'a sufficiently long label here',
             context: 'a real context',
-            accent: '#ffb86c'
+            accent: 'impact'
           }
         ],
         techHighlights: ['Python'],
@@ -124,7 +124,7 @@ describe('ExperienceSchema', () => {
             value: '50%',
             label: 'a sufficiently long label',
             context: 'a real context',
-            accent: '#ffb86c'
+            accent: 'impact'
           }
         ],
         techHighlights: ['Python'],
@@ -150,7 +150,7 @@ describe('ProjectSchema', () => {
         domain: 'GenAI & Agentic Systems',
         repoUrl: 'not-a-url',
         tags: ['tag'],
-        accentColor: '#bd93f9',
+        accentColor: 'brand',
         featured: false
       })
     ).toThrow();
@@ -165,7 +165,7 @@ describe('ProjectSchema', () => {
         domain: 'GenAI & Agentic Systems',
         repoUrl: 'https://github.com/x/y',
         tags: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], // 9 > max 8
-        accentColor: '#bd93f9',
+        accentColor: 'brand',
         featured: false
       })
     ).toThrow();

@@ -12,7 +12,10 @@
  * Layout is controlled by the parent grid via `class` prop spanning utilities.
  */
 
-export type BentoAccent = 'brand' | 'infra' | 'impact' | 'human' | 'status' | 'stack';
+import { accentVar } from '@lib/accents';
+import type { AccentToken } from '@lib/accents';
+
+export type BentoAccent = AccentToken;
 
 export interface Props {
   /** Tailwind grid-span classes (e.g., 'col-span-2 row-span-2'). */
@@ -21,8 +24,6 @@ export interface Props {
   accent?: BentoAccent;
   /** Optional badge label (top-right ribbon). */
   badge?: string;
-  /** Optional badge accent hex (overrides accent token for the badge). */
-  badgeColor?: string;
   /** Optional href; makes the card a stretched-link block. */
   href?: string;
   /** External link rel, defaults to noopener for safety. */
@@ -35,7 +36,6 @@ const {
   class: klass = '',
   accent = 'brand',
   badge,
-  badgeColor,
   href,
   rel = 'noopener',
   ariaLabelledby
@@ -47,19 +47,9 @@ const accentClassMap: Record<BentoAccent, string> = {
   impact: 'hover:border-impact hover:shadow-glow-impact',
   human: 'hover:border-human hover:shadow-glow-human',
   status: 'hover:border-status hover:shadow-glow-status',
-  stack: 'hover:border-stack hover:shadow-glow-impact'
+  stack: 'hover:border-stack hover:shadow-glow-impact',
+  danger: 'hover:border-danger hover:shadow-glow-brand'
 };
-
-const accentBorderMap: Record<BentoAccent, string> = {
-  brand: '#bd93f9',
-  infra: '#8be9fd',
-  impact: '#ffb86c',
-  human: '#ff79c6',
-  status: '#50fa7b',
-  stack: '#f1fa8c'
-};
-
-const badgeFill = badgeColor ?? accentBorderMap[accent];
 ---
 
 <article
@@ -74,7 +64,7 @@ const badgeFill = badgeColor ?? accentBorderMap[accent];
     badge && (
       <span
         class="absolute right-3 top-3 z-10 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider"
-        style={`background-color: ${badgeFill}1a; color: ${badgeFill}; border: 1px solid ${badgeFill}`}
+        style={`background-color: ${accentVar(accent, 0.1)}; color: ${accentVar(accent)}; border: 1px solid ${accentVar(accent)}`}
       >
         {badge}
       </span>

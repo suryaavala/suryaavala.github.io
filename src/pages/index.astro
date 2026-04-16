@@ -47,13 +47,15 @@ if (!featured || !latest) {
   );
 }
 
-const stackPills: { label: string; accent: string }[] = [
-  { label: 'Python', accent: '#f1fa8c' },
-  { label: 'C++', accent: '#8be9fd' },
-  { label: 'Kubernetes', accent: '#8be9fd' },
-  { label: 'PyTorch', accent: '#ffb86c' },
-  { label: 'vLLM', accent: '#ffb86c' },
-  { label: 'LangGraph', accent: '#bd93f9' }
+import type { AccentToken } from '@lib/accents';
+
+const stackPills: { label: string; accent: AccentToken }[] = [
+  { label: 'Python', accent: 'stack' },
+  { label: 'C++', accent: 'infra' },
+  { label: 'Kubernetes', accent: 'infra' },
+  { label: 'PyTorch', accent: 'impact' },
+  { label: 'vLLM', accent: 'impact' },
+  { label: 'LangGraph', accent: 'brand' }
 ];
 ---
 
@@ -135,7 +137,7 @@ const stackPills: { label: string; accent: string }[] = [
       {/* ── 3. Status Card (1x1) — Open to Work ──────────────────────────── */}
       <BentoCard accent="status" ariaLabelledby="status-title">
         <header class="flex items-center gap-2">
-          <StatusBeacon color="#50fa7b" label="Currently open to work" />
+          <StatusBeacon color="status" label="Currently open to work" />
           <h2 id="status-title" class="font-mono text-sm uppercase tracking-widest text-status">
             Open to Work
           </h2>
@@ -160,7 +162,6 @@ const stackPills: { label: string; accent: string }[] = [
         accent="infra"
         class="md:col-span-2 lg:col-span-2"
         badge={featured.badgeLabel}
-        badgeColor={featured.accentColor}
         href={featured.repoUrl}
         rel="noopener external"
         ariaLabelledby="agentic-title"
@@ -176,7 +177,7 @@ const stackPills: { label: string; accent: string }[] = [
           {
             featured.tags.slice(0, 5).map((tag) => (
               <li>
-                <TechBadge accent="#8be9fd">{tag}</TechBadge>
+                <TechBadge accent="infra">{tag}</TechBadge>
               </li>
             ))
           }
@@ -187,7 +188,6 @@ const stackPills: { label: string; accent: string }[] = [
       <BentoCard
         accent="infra"
         badge={latest.badgeLabel}
-        badgeColor={latest.accentColor}
         href={latest.repoUrl}
         rel="noopener external"
         ariaLabelledby="infra-title"
@@ -201,7 +201,7 @@ const stackPills: { label: string; accent: string }[] = [
           {
             latest.tags.slice(0, 4).map((tag) => (
               <li>
-                <TechBadge accent="#8be9fd">{tag}</TechBadge>
+                <TechBadge accent="infra">{tag}</TechBadge>
               </li>
             ))
           }
