@@ -36,7 +36,7 @@ const publishDateLabel = data.publishDate.toLocaleDateString('en-AU', {
   description={data.description}
   requiresMath={data.requiresMath}
 >
-  <article class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+  <article id="main" class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
     <header class="mb-8">
       <p class="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
         ~/notes/{entry.slug}
@@ -73,6 +73,15 @@ const publishDateLabel = data.publishDate.toLocaleDateString('en-AU', {
     >
       <slot />
     </div>
+
+    {/* Shiki github-dark-dimmed comment colour #768390 has only 3.87:1 on its
+        background #22272e — fails WCAG 1.4.3 AA at 14px. Brighten to #8b949e
+        (4.98:1, the non-dimmed github-dark comment colour). */}
+    <style is:global>
+      .astro-code span[style*='#768390'] {
+        color: #8b949e !important;
+      }
+    </style>
 
     <footer class="mt-12 border-t border-border-base/60 pt-6 text-sm text-text-muted">
       <p>
