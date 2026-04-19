@@ -24,19 +24,27 @@ import TypingHero from '@islands/TypingHero.svelte';
 
 import { metrics } from '@data/metrics';
 import { projects, upstreamPRs } from '@data/projects';
+import { experiences } from '@data/experiences';
 
-// Order matters: the first phrase is SSR-rendered as the LCP element, so it
-// must also be the canonical role statement for SEO, a11y (accessible-name
-// algorithm reads H1 text), and screen readers. The animation cycles through
-// the rest.
+// Composite-proof aggregates — computed at build from the canonical data.
+const rolesCount = experiences.length;
+const metricsCount = metrics.length;
+const upstreamCount = upstreamPRs.length;
+const industriesCount = new Set(experiences.map((e) => e.industry)).size;
+
+// Canonical H1 is static — SEO, LCP, and screen-reader accessible name all
+// resolve to a single stable string. The TypingHero animates a sibling line
+// with aria-hidden, so motion never mutates the heading's accessible name.
+const heroHeading = 'Staff Machine Learning Engineer';
+
 const heroPhrases = [
-  'Staff Machine Learning Engineer',
   'Healthcare ML Platforms · Clinical NLP',
   'Energy Forecasting · FinOps Strategy',
   'Privacy-by-Design · Regulated Compliance',
-  'Platform Architecture · MLOps at Scale'
+  'Platform Architecture · MLOps at Scale',
+  'Agentic Systems · GraphRAG · LangGraph'
 ];
-const initialHeroPhrase = heroPhrases[0]!; // SSR-rendered for LCP discipline
+const initialHeroPhrase = heroPhrases[0]!;
 
 // Featured cards — strict spec mapping (§4.1 cards 4 + 5).
 const featured = projects.find((p) => p.badgeLabel === 'Featured');
@@ -77,21 +85,21 @@ const stackPills: { label: string; accent: AccentToken }[] = [
             id="hero-title"
             class="font-mono text-3xl font-semibold leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl"
           >
-            <TypingHero client:idle initial={initialHeroPhrase} phrases={heroPhrases} />
+            {heroHeading}
           </h1>
+          <p
+            class="font-mono text-base leading-tight tracking-tight text-brand sm:text-lg"
+            aria-hidden="true"
+          >
+            <TypingHero client:idle initial={initialHeroPhrase} phrases={heroPhrases} />
+          </p>
           <p class="text-base text-text-primary sm:text-lg">
-            Principal AI Systems Architect · Staff ML Engineer
+            Principal AI Systems Architect · 10 years across 4 regulated industries
           </p>
           <p class="font-mono text-sm italic text-brand sm:text-base">
             "A decade of making ML systems survive production in healthcare and energy — where the
             plumbing matters more than the model."
           </p>
-          <blockquote
-            class="border-l-2 border-text-muted/50 pl-4 font-mono text-xs text-text-muted sm:text-sm"
-          >
-            "I've always been passionate about computers and the ability to make them solve problems
-            for us."
-          </blockquote>
           <p class="font-mono text-xs text-infra sm:text-sm">
             Healthcare · Energy · Finance · Tech
           </p>
@@ -158,7 +166,45 @@ const stackPills: { label: string; accent: AccentToken }[] = [
         </p>
       </BentoCard>
 
-      {/* ── 4. Agentic System Highlight (2x1) ────────────────────────────── */}
+      {/* ── 4. By the Numbers (1x1) — composite proof line ───────────────── */}
+      <BentoCard accent="human" ariaLabelledby="composite-title">
+        <header class="flex items-center gap-2">
+          <span aria-hidden="true" class="text-human">∑</span>
+          <h2
+            id="composite-title"
+            class="font-mono text-sm uppercase tracking-widest text-human"
+          >
+            By the Numbers
+          </h2>
+        </header>
+        <dl class="flex-1 space-y-2 font-mono text-xs">
+          <div class="flex items-baseline justify-between gap-3">
+            <dt class="text-text-muted">decade</dt>
+            <dd class="text-base text-text-primary sm:text-lg">10<span class="text-text-muted"> yrs</span></dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3">
+            <dt class="text-text-muted">industries shipped in</dt>
+            <dd class="text-base text-text-primary sm:text-lg">{industriesCount}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3">
+            <dt class="text-text-muted">shipped roles</dt>
+            <dd class="text-base text-text-primary sm:text-lg">{rolesCount}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3">
+            <dt class="text-text-muted">measured outcomes</dt>
+            <dd class="text-base text-text-primary sm:text-lg">{metricsCount}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-3">
+            <dt class="text-text-muted">upstream PRs merged</dt>
+            <dd class="text-base text-text-primary sm:text-lg">{upstreamCount}</dd>
+          </div>
+        </dl>
+        <p class="mt-auto font-mono text-[11px] text-text-muted">
+          computed at build · not a marketing claim
+        </p>
+      </BentoCard>
+
+      {/* ── 5. Agentic System Highlight (2x1) ────────────────────────────── */}
       <BentoCard
         accent="infra"
         class="md:col-span-2 lg:col-span-2"
@@ -236,7 +282,7 @@ const stackPills: { label: string; accent: AccentToken }[] = [
         </p>
       </BentoCard>
 
-      {/* ── 8. Leadership Signal (1x1) ───────────────────────────────────── */}
+      {/* ── 7. Leadership Signal (1x1) ───────────────────────────────────── */}
       <BentoCard accent="impact" href="/runtime" ariaLabelledby="leadership-title">
         <header class="flex items-center gap-2">
           <span aria-hidden="true" class="text-impact">⌘</span>
@@ -253,6 +299,26 @@ const stackPills: { label: string; accent: AccentToken }[] = [
         </p>
         <p class="mt-auto font-mono text-xs text-impact underline-offset-4 group-hover:underline">
           full leadership detail per role →
+        </p>
+      </BentoCard>
+
+      {/* ── 8. Beyond Code (1x1) — mission & values ──────────────────────── */}
+      <BentoCard accent="human" ariaLabelledby="beyond-title">
+        <header class="flex items-center gap-2">
+          <span aria-hidden="true" class="text-human">♁</span>
+          <h2 id="beyond-title" class="font-mono text-sm uppercase tracking-widest text-human">
+            Beyond Code
+          </h2>
+        </header>
+        <p class="text-sm text-text-primary">
+          Using ML to drive equitable outcomes — climate action, public-policy data, and
+          technology for underserved communities.
+        </p>
+        <p class="text-xs leading-relaxed text-text-muted">
+          "AI is the new electricity."
+        </p>
+        <p class="mt-auto font-mono text-xs text-human">
+          AI for Social Good · Climate · Rational Thinking
         </p>
       </BentoCard>
     </BentoGrid>

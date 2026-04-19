@@ -16,9 +16,24 @@
   export let axes: CompetencyAxis[];
   /** SVG viewport. Component scales to container width. */
   export let size = 460;
+  /** Extra padding outside the chart radius to host axis labels without clipping. */
+  export let labelPadding = 56;
 
-  const center = size / 2;
-  const radius = size / 2 - 60;
+  const viewSize = size + labelPadding * 2;
+  const center = viewSize / 2;
+  const radius = size / 2 - 40;
+
+  // Split long axis labels across two lines for legibility (radar labels get
+  // cramped near top/bottom spokes at ~10px type). Break on the last space
+  // before a target column so neither line dominates.
+  function splitLabel(label: string): string[] {
+    if (label.length <= 14) return [label];
+    const mid = Math.floor(label.length / 2);
+    let breakIdx = label.lastIndexOf(' ', mid + 3);
+    if (breakIdx < 4) breakIdx = label.indexOf(' ', mid);
+    if (breakIdx < 0) return [label];
+    return [label.slice(0, breakIdx), label.slice(breakIdx + 1)];
+  }
 
   // Convert axis index → (x, y) on the unit circle, rotated so axis 0 is at top.
   function pointFor(index: number, magnitude: number) {
@@ -41,7 +56,11 @@
   // Axis spokes.
   $: spokes = axes.map((_, i) => pointFor(i, 1));
   // Label positions (slightly past the outer ring).
-  $: labels = axes.map((a, i) => ({ ...pointFor(i, 1.16), label: a.label, score: a.score }));
+  $: labels = axes.map((a, i) => ({
+    ...pointFor(i, 1.22),
+    lines: splitLabel(a.label),
+    score: a.score
+  }));
   // Vertex marker positions.
   $: markers = axes.map((a, i) => ({ ...pointFor(i, a.score / 100), axis: a }));
 
@@ -49,7 +68,7 @@
 </script>
 
 <figure
-  class="relative mx-auto w-full max-w-[460px]"
+  class="relative mx-auto w-full max-w-[520px]"
   aria-label="Competency radar across 8 self-assessed axes"
 >
   <!--
@@ -62,7 +81,7 @@
     related, individually-focusable elements".
   -->
   <svg
-    viewBox={`0 0 ${size} ${size}`}
+    viewBox={`0 0 ${viewSize} ${viewSize}`}
     class="h-auto w-full"
     role="group"
     aria-labelledby="radar-title radar-desc"
@@ -128,22 +147,25 @@
       />
     {/each}
 
-    <!-- Axis labels (numbered for fallback parsing; visually positioned around perimeter) -->
+    <!-- Axis labels (wrapped onto two lines when long; score rendered below). -->
     {#each labels as l, i}
+      {@const yOffset = l.lines.length === 2 ? -6 : 0}
       <text
         x={l.x}
-        y={l.y}
+        y={l.y + yOffset}
         text-anchor="middle"
         dominant-baseline="middle"
         class="font-mono"
         font-size="10"
         fill={activeIndex === i ? 'rgb(var(--accent-brand))' : 'rgb(var(--accent-infra))'}
       >
-        {l.label}
+        {#each l.lines as line, li}
+          <tspan x={l.x} dy={li === 0 ? 0 : 11}>{line}</tspan>
+        {/each}
       </text>
       <text
         x={l.x}
-        y={l.y + 12}
+        y={l.y + yOffset + (l.lines.length === 2 ? 23 : 12)}
         text-anchor="middle"
         dominant-baseline="middle"
         class="font-mono"

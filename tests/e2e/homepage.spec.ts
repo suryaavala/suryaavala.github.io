@@ -3,7 +3,7 @@
  *
  * Asserts:
  *   - Page loads with the production title.
- *   - All 7 Bento nodes render (one per spec card).
+ *   - All 8 Bento nodes render (one per spec card).
  *   - JSON-LD Person block is present and parses cleanly.
  *   - The 6 metric values are pre-rendered in the DOM (no-JS guarantee
  *     against MetricCounter regressing to JS-only rendering).
@@ -15,10 +15,12 @@ const BENTO_HEADING_IDS = [
   'hero-title',
   'impact-title',
   'status-title',
+  'composite-title',
   'agentic-title',
   'infra-title',
   'oss-title',
-  'leadership-title'
+  'leadership-title',
+  'beyond-title'
 ];
 
 test.describe('Homepage', () => {
@@ -29,7 +31,7 @@ test.describe('Homepage', () => {
     );
   });
 
-  test('renders all 7 Bento nodes', async ({ page }) => {
+  test('renders all 9 Bento nodes', async ({ page }) => {
     await page.goto('/');
     for (const id of BENTO_HEADING_IDS) {
       await expect(page.locator(`#${id}`), `${id} should be present`).toBeVisible();
