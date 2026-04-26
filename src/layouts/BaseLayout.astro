@@ -1,0 +1,149 @@
+---
+import '@styles/fonts.css';
+import '@styles/global.css';
+
+import NavBar from '@components/NavBar.astro';
+import Footer from '@components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** Relative OG image path under /og/ — defaults to og-default.png */
+  ogImage?: string;
+  /** Marks pages that render math; downstream NoteLayout uses this to conditionally load katex.min.css */
+  requiresMath?: boolean;
+  /** Optional canonical URL (falls back to current page URL) */
+  canonical?: string;
+  /** Suppress NavBar + Footer (e.g. 404 page or print preview). */
+  bareChrome?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og/og-default.svg',
+  requiresMath = false,
+  canonical,
+  bareChrome = false
+} = Astro.props;
+
+const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageURL = new URL(ogImage, Astro.site).toString();
+
+// CSP — meta-tag form. See plan §Key decisions #8 + README "Cloudflare
+// Transform Rule" for the stronger HTTP-header CSP that layers on top at the
+// edge. Notes on the relaxed directives below:
+//
+// - `script-src 'self' 'unsafe-inline'`: Astro emits inline bootstrap scripts
+//   for every `client:*` island hydration, and BaseLayout itself ships an
+//   inline FOUC script (read localStorage → toggle .dark before first paint).
+//   A strict `'self'`-only script-src BLOCKS both of those — the site breaks:
+//   no theme toggle, no MetricCounter animation, and axe/Lighthouse
+//   "best-practices" drops because the runtime console is full of CSP errors.
+//   Static-site XSS vector via inline injection is ~nil (no user input makes
+//   it into the rendered HTML), so this trade is correct. The Cloudflare rule
+//   can tighten to hash-based CSP in production.
+//
+// - `frame-ancestors` is dropped: the browser ignores it in a <meta> tag
+//   (only honored from an HTTP header), so including it is noise that trips
+//   Lighthouse CSP audit warnings. It's set by the Cloudflare rule.
+const csp = [
+  "default-src 'self'",
+  "img-src 'self' data: https://streak-stats.demolab.com",
+  "font-src 'self'",
+  "style-src 'self' 'unsafe-inline'", // Astro inlines critical CSS
+  "script-src 'self' 'unsafe-inline'",
+  "connect-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'"
+].join('; ');
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0d1117" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    {/* Favicons + manifest */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    {/* Preload critical fonts (fonts are optional, so failure is silent) */}
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/fira-code-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="suryaavala.com" />
+    <meta property="og:locale" content="en_AU" />
+
+    {/* Twitter / X */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    {/* RSS discovery */}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="suryaavala.com /notes RSS"
+      href="/rss.xml"
+    />
+
+    {
+      /*
+       * FOUC-safe theme init. This blocking inline script runs before first paint:
+       *   - reads localStorage.theme ('light' | 'dark' | null)
+       *   - falls back to prefers-color-scheme
+       *   - toggles .dark on <html> accordingly
+       * Must stay synchronous and above all other scripts (plan §Key decisions #1).
+       */
+    }
+    <script is:inline>
+      (function () {
+        try {
+          var ls = localStorage.getItem('theme');
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          var isDark = ls ? ls === 'dark' : !prefersLight;
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.classList.toggle('light', !isDark);
+        } catch (e) {
+          /* localStorage unavailable — fall through with default dark */
+        }
+      })();
+    </script>
+
+    {requiresMath && <link rel="stylesheet" href="/katex.min.css" />}
+
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-screen flex-col bg-bg-base text-text-primary">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-brand focus:px-3 focus:py-2 focus:text-bg-base"
+    >
+      Skip to content
+    </a>
+    {!bareChrome && <NavBar />}
+    <div class="flex-1">
+      <slot />
+    </div>
+    {!bareChrome && <Footer />}
+  </body>
+</html>

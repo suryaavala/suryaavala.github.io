@@ -1,108 +1,63 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
-
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * Playwright config — E2E + a11y + visual regression.
+ *
+ * - Boots `astro preview` against the built `dist/` so we test the production
+ *   bundle, not the dev server.
+ * - Three viewports × two themes for visual regression (snapshots committed).
+ * - axe-core via @axe-core/playwright runs inside individual specs (cheaper
+ *   than the project-level `expect.toPassAxe` extender).
  */
-// require('dotenv').config();
 
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
-const config: PlaywrightTestConfig = {
-	testDir: './tests',
-	/* Maximum time one test can run for. */
-	timeout: 30 * 1000,
-	expect: {
-		/**
-		 * Maximum time expect() should wait for the condition to be met.
-		 * For example in `await expect(locator).toHaveText();`
-		 */
-		timeout: 5000
-	},
-	/* Run tests in files in parallel */
-	fullyParallel: true,
-	/* Fail the build on CI if you accidentally left test.only in the source code. */
-	forbidOnly: !!process.env.CI,
-	/* Retry on CI only */
-	retries: process.env.CI ? 2 : 0,
-	/* Opt out of parallel tests on CI. */
-	workers: process.env.CI ? 1 : undefined,
-	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: 'html',
-	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-	use: {
-		/* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-		actionTimeout: 0,
-		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: 'http://localhost:5173',
+import { defineConfig, devices } from '@playwright/test';
 
-		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-		trace: 'on-first-retry'
-	},
+const PORT = Number(process.env.PLAYWRIGHT_PREVIEW_PORT ?? 4322);
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${PORT}`;
 
-	/* Configure projects for major browsers */
-	projects: [
-		{
-			name: 'chromium',
-			use: {
-				...devices['Desktop Chrome']
-			}
-		},
-
-		{
-			name: 'firefox',
-			use: {
-				...devices['Desktop Firefox']
-			}
-		},
-
-		{
-			name: 'webkit',
-			use: {
-				...devices['Desktop Safari']
-			}
-		}
-
-		/* Test against mobile viewports. */
-		// {
-		//   name: 'Mobile Chrome',
-		//   use: {
-		//     ...devices['Pixel 5'],
-		//   },
-		// },
-		// {
-		//   name: 'Mobile Safari',
-		//   use: {
-		//     ...devices['iPhone 12'],
-		//   },
-		// },
-
-		/* Test against branded browsers. */
-		// {
-		//   name: 'Microsoft Edge',
-		//   use: {
-		//     channel: 'msedge',
-		//   },
-		// },
-		// {
-		//   name: 'Google Chrome',
-		//   use: {
-		//     channel: 'chrome',
-		//   },
-		// },
-	],
-
-	/* Folder for test artifacts such as screenshots, videos, traces, etc. */
-	// outputDir: 'test-results/',
-
-	/* Run your local dev server before starting the tests */
-	webServer: {
-		command: 'npm run dev',
-		port: 5173,
-		reuseExistingServer: !process.env.CI
-	}
-};
-
-export default config;
+export default defineConfig({
+  testDir: './tests/e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 2 : undefined,
+  reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
+  // 60s (not 30s): axe-core analysis + WebKit context teardown under parallel
+  // workers regularly tips past 30s when 2+ projects hit the same preview
+  // server. We saw 100% of webkit a11y tests time out in teardown at 30s; the
+  // actual assertion time is well under 5s. Keeping the per-expect timeout
+  // tight (5s) still catches real regressions.
+  timeout: 60_000,
+  expect: {
+    timeout: 5_000,
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.02,
+      animations: 'disabled'
+    }
+  },
+  use: {
+    baseURL,
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    colorScheme: 'dark'
+  },
+  projects: [
+    {
+      name: 'chromium-desktop',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } }
+    },
+    {
+      name: 'webkit-desktop',
+      use: { ...devices['Desktop Safari'], viewport: { width: 1440, height: 900 } }
+    },
+    {
+      name: 'mobile-chromium',
+      use: { ...devices['Pixel 7'] }
+    }
+  ],
+  webServer: {
+    command: `npx astro preview --host 127.0.0.1 --port ${PORT}`,
+    url: baseURL,
+    reuseExistingServer: !process.env.CI,
+    timeout: 60_000
+  }
+});

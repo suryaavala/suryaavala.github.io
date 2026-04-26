@@ -1,0 +1,34 @@
+---
+/**
+ * /notes/[slug] — Dynamic note detail (spec §4.5).
+ *
+ * Uses Astro Content Collections + getStaticPaths so every note compiles to
+ * a static HTML file at build time. KaTeX CSS injection is driven by the
+ * note's `requiresMath` frontmatter via NoteLayout → BaseLayout (plan §key
+ * decision #5).
+ */
+
+import { type CollectionEntry, getCollection } from 'astro:content';
+import NoteLayout from '@layouts/NoteLayout.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) =>
+    import.meta.env.PROD ? !data.isDraft : true
+  );
+  return notes.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'notes'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<NoteLayout entry={entry}>
+  <Content />
+</NoteLayout>

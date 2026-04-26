@@ -1,0 +1,24 @@
+/*
+ * Self-hosted variable fonts for Lighthouse perf (see plan §Key decisions #4).
+ * font-display: optional — prevents CLS; falls back to system stack cleanly.
+ *
+ * Note: the actual WOFF2 files live under /public/fonts/. Because they are
+ * optional, absence is non-fatal; the sans/mono fallback stack in tailwind
+ * config keeps the site usable without network.
+ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url('/fonts/inter-var.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: optional;
+  src: url('/fonts/fira-code-var.woff2') format('woff2-variations');
+}

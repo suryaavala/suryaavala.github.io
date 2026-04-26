@@ -1,0 +1,40 @@
+# Lychee — outbound link checker config.
+# Docs: https://lychee.cli.rs/configuration/
+#
+# The CI job scans `dist/**/*.html` after the Astro build. These settings keep
+# the job honest (all outbound links must be healthy) while tolerating known
+# transient failure modes (rate limits, anchor-only href="#").
+
+max_concurrency = 8
+max_redirects = 5
+timeout = 20
+retry_wait_time = 2
+accept = [200, 206, 429]
+# mailto: links are excluded by default in lychee 0.23+ (`include_mail = false`).
+# The old `exclude_mail` key was renamed and is now a parse error if used.
+include_mail = false
+exclude_loopback = true
+no_progress = true
+
+# Known noisy / transient outbound hosts — warn but don't fail the build.
+exclude = [
+  "^https?://(www\\.)?linkedin\\.com",     # LinkedIn bot-walls public profiles
+  "^https?://twitter\\.com",                # x.com redirects + auth walls
+  "^https?://x\\.com",
+  "^https?://streak-stats\\.demolab\\.com", # GitHub Streak widget is a redirector
+  "^mailto:",
+  # Self-canonical URLs: Astro emits <link rel="canonical" href="https://www.suryaavala.com/<path>/">
+  # on every page. Pre-deploy (PR branches, first landing of v2) these 404 on the
+  # live origin because the site hasn't been published yet. Internal routing is
+  # already verified via the --root-dir pass against dist/**/*.html, so skipping
+  # the production-domain round-trip costs us no coverage.
+  "^https?://(www\\.)?suryaavala\\.com"
+]
+
+# Skip link-targets that only exist inside the dev server / preview.
+exclude_path = [
+  "node_modules",
+  "playwright-report",
+  "test-results",
+  ".lighthouseci"
+]

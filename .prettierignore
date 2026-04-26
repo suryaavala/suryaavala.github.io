@@ -1,13 +1,24 @@
-.DS_Store
-node_modules
-/build
-/.svelte-kit
-/package
-.env
-.env.*
-!.env.example
-
-# Ignore files for PNPM, NPM and YARN
-pnpm-lock.yaml
+dist/
+.astro/
+node_modules/
 package-lock.json
-yarn.lock
+archive/
+lighthouse-reports/
+playwright-report/
+test-results/
+coverage/
+public/fonts/
+public/katex.min.css
+*.min.css
+*.min.js
+
+# specs/01_design.md is the authoritative spec — leave it exactly as the
+# architect wrote it. Prettier's bullet/table normalisation would create
+# noisy diffs on every touch.
+specs/01_design.md
+specs/00_persona.md
+specs/00_github_readme.md
+
+# evidence.html is a hand-authored approval brief; leave it alone so
+# re-runs don't reformat the inline CSS.
+evidence.html

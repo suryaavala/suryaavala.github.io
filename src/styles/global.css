@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light "Paper" mode (secondary) */
+    --bg-base: 248 249 250; /* #f8f9fa */
+    --bg-surface: 255 255 255; /* #ffffff */
+    --bg-surface-alt: 241 245 249; /* slate-100 */
+    --border-base: 229 231 235; /* gray-200 */
+    --text-primary: 30 41 59; /* slate-800 */
+    /* slate-600 #475569 — 7.19:1 on bg-base, comfortable AAA */
+    --text-muted: 71 85 105;
+
+    /* Light-theme accent colors — all ≥ 4.5:1 on #f8f9fa */
+    --accent-brand: 109 40 217; /* #6d28d9  ~6.8:1 */
+    --accent-brand-body: 109 40 217;
+    --accent-status: 21 128 61; /* #15803d  ~4.6:1 */
+    --accent-infra: 14 116 144; /* #0e7490  ~4.5:1 */
+    --accent-impact: 194 65 12; /* #c2410c  ~5.3:1 */
+    --accent-human: 190 24 93; /* #be185d  ~5.2:1 */
+    --accent-stack: 161 98 7; /* #a16207  ~5.0:1 */
+    --accent-danger: 185 28 28; /* #b91c1c  ~5.7:1 */
+  }
+
+  :root.dark {
+    /* Dracula / GitHub Dark (primary) */
+    --bg-base: 13 17 23; /* #0d1117 */
+    --bg-surface: 22 27 34; /* #161b22 */
+    --bg-surface-alt: 40 42 54; /* #282a36 */
+    --border-base: 48 54 61; /* #30363d */
+    --text-primary: 248 248 242; /* #f8f8f2 */
+    /* Brightened Dracula comment #7a8bc0 — 5.66:1 on bg-base, AA with margin.
+       Original #6272a4 was 4.02:1 and fails 12px body-copy WCAG 1.4.3. */
+    --text-muted: 122 139 192;
+
+    /* Dracula accent palette — vivid on dark backgrounds */
+    --accent-brand: 189 147 249; /* #bd93f9 */
+    --accent-brand-body: 196 160 255; /* #c4a0ff */
+    --accent-status: 80 250 123; /* #50fa7b */
+    --accent-infra: 139 233 253; /* #8be9fd */
+    --accent-impact: 255 184 108; /* #ffb86c */
+    --accent-human: 255 121 198; /* #ff79c6 */
+    --accent-stack: 241 250 140; /* #f1fa8c */
+    --accent-danger: 255 85 85; /* #ff5555 */
+  }
+
+  html {
+    color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-bg-base font-sans text-text-primary antialiased;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: rgb(var(--accent-brand));
+    color: rgb(var(--bg-base));
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Focus-visible ring — brand purple on any interactive */
+  *:focus-visible {
+    outline: 2px solid rgb(var(--accent-brand));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .dracula-rainbow {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--accent-danger)) 0%,
+      rgb(var(--accent-impact)) 16%,
+      rgb(var(--accent-stack)) 33%,
+      rgb(var(--accent-status)) 50%,
+      rgb(var(--accent-infra)) 66%,
+      rgb(var(--accent-brand)) 83%,
+      rgb(var(--accent-human)) 100%
+    );
+  }
+
+  .bento-card {
+    @apply relative rounded-lg border border-border-base bg-bg-surface p-6 transition-all duration-200;
+    @apply hover:border-brand hover:shadow-glow-brand;
+  }
+
+  .bento-card--brand {
+    @apply hover:border-brand hover:shadow-glow-brand;
+  }
+  .bento-card--infra {
+    @apply hover:border-infra hover:shadow-glow-infra;
+  }
+  .bento-card--impact {
+    @apply hover:border-impact hover:shadow-glow-impact;
+  }
+  .bento-card--human {
+    @apply hover:border-human hover:shadow-glow-human;
+  }
+  .bento-card--status {
+    @apply hover:border-status hover:shadow-glow-status;
+  }
+}

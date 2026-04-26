@@ -1,0 +1,54 @@
+---
+/**
+ * Themed inline badge for tech tags / pills.
+ *
+ * Used in the Hero stack pills, Bento card tag rows, and the /stack badge
+ * grid. Accent is set per-instance via a CSS custom property that chains to
+ * the global --accent-* tokens, so badges adapt when the theme switches.
+ */
+
+import type { AccentToken } from '@lib/accents';
+
+export interface Props {
+  /** Semantic accent token (resolves to a CSS custom property). */
+  accent?: AccentToken;
+  /** Optional href turns the badge into an anchor. */
+  href?: string;
+  /** External link rel — defaults to noopener for safety. */
+  rel?: string;
+  /** Visual emphasis level. `solid` = filled, `outline` = bordered. */
+  variant?: 'outline' | 'solid';
+  /** Optional additional Tailwind classes. */
+  class?: string;
+}
+
+const {
+  accent = 'brand',
+  href,
+  rel = 'noopener',
+  variant = 'outline',
+  class: klass = ''
+} = Astro.props;
+
+const styleVar = `--badge-accent: var(--accent-${accent});`;
+
+const baseClasses = [
+  'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-xs transition-all duration-150',
+  variant === 'outline'
+    ? 'border-[color:rgb(var(--badge-accent))] bg-transparent text-[color:rgb(var(--badge-accent))] hover:bg-[rgb(var(--badge-accent)_/_0.1)]'
+    : 'border-transparent bg-[rgb(var(--badge-accent)_/_0.15)] text-[color:rgb(var(--badge-accent))] hover:bg-[rgb(var(--badge-accent)_/_0.25)]',
+  klass
+];
+---
+
+{
+  href ? (
+    <a href={href} rel={rel} class:list={baseClasses} style={styleVar}>
+      <slot />
+    </a>
+  ) : (
+    <span class:list={baseClasses} style={styleVar}>
+      <slot />
+    </span>
+  )
+}

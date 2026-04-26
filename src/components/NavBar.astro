@@ -1,0 +1,94 @@
+---
+/**
+ * Top-level navigation across all 6 routes (spec §4).
+ *
+ * Pure HTML / Tailwind — zero JS.
+ * Active route gets a brand-purple underline; rest are muted.
+ * The ThemeToggle island slots into the right-hand control cluster.
+ */
+
+import ThemeToggle from '@islands/ThemeToggle.svelte';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links: { href: string; label: string }[] = [
+  { href: '/', label: 'home' },
+  { href: '/architecture', label: 'architecture' },
+  { href: '/runtime', label: 'runtime' },
+  { href: '/stack', label: 'stack' },
+  { href: '/notes', label: 'notes' },
+  { href: '/ping', label: 'ping' }
+];
+
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-border-base/60 bg-bg-base/80 backdrop-blur supports-[backdrop-filter]:bg-bg-base/60"
+>
+  <nav
+    aria-label="Primary"
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6"
+  >
+    <a
+      href="/"
+      class="group flex items-center gap-2 font-mono text-sm font-semibold tracking-tight text-text-primary"
+      aria-label="suryaavala.com — home"
+    >
+      <span aria-hidden="true" class="text-brand">~/</span>
+      <span class="text-text-primary group-hover:text-brand">suryaavala</span>
+      <span aria-hidden="true" class="text-text-muted">.com</span>
+    </a>
+
+    <ul class="hidden items-center gap-1 font-mono text-sm md:flex" role="list">
+      {
+        links.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={isActive(href) ? 'page' : undefined}
+              class:list={[
+                'rounded px-3 py-1.5 transition-colors',
+                isActive(href)
+                  ? 'text-brand underline decoration-brand decoration-2 underline-offset-[6px]'
+                  : 'text-text-muted hover:text-text-primary'
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <ThemeToggle client:load />
+    </div>
+  </nav>
+
+  {/* Mobile horizontal scroller — preserves all 6 routes within one tap */}
+  <ul
+    class="flex items-center gap-2 overflow-x-auto px-4 pb-3 font-mono text-xs md:hidden"
+    role="list"
+    aria-label="Primary navigation (mobile)"
+  >
+    {
+      links.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            aria-current={isActive(href) ? 'page' : undefined}
+            class:list={[
+              'whitespace-nowrap rounded-full border px-3 py-1.5 transition-colors',
+              isActive(href)
+                ? 'border-brand text-brand'
+                : 'border-border-base/60 text-text-muted hover:border-border-base hover:text-text-primary'
+            ]}
+          >
+            {label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</header>

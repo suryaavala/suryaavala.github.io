@@ -1,0 +1,114 @@
+---
+title: 'First Principles Multi-Agent Orchestration'
+publishDate: 2026-04-15
+description: 'Why scaling-succotash is a distributed system first and an LLM stack second — Celery DLQs, circuit breakers, and the Kubernetes substrate that holds the whole thing up.'
+tags: ['GenAI', 'LangGraph', 'Distributed Systems', 'Kubernetes']
+category: 'GenAI Architecture'
+commercialContext: 'Anchored to scaling-succotash — a production agentic search engine on K8s'
+isDraft: false
+requiresMath: false
+---
+
+> _"Once your 'agent' calls a second tool, you have a distributed system. Most teams ship a chatbot and discover a distributed system in production."_
+
+`scaling-succotash` is the production-grade agentic search engine I keep on the homepage as the flagship system. The interesting parts of it are not the LLM. The interesting parts are the things distributed-systems engineers have done for decades: dead-letter queues, circuit breakers, idempotent retries, GitOps deploys, and a `StatefulSet` for state that _must_ survive a pod eviction.
+
+This post is the architecture walk-through.
+
+## The temptation: "just chain some agents"
+
+The naive sketch is appealing:
+
+```typescript
+// DON'T DO THIS
+const result = await agentA.invoke({
+  input: userQuery,
+  tools: [searchTool, retrieveTool, summariseTool]
+});
+return result;
+```
+
+In a notebook, this works. In production, it has every failure mode of distributed computing without any of the disciplines of distributed computing. A single 502 from a downstream API will:
+
+- Burn the user's request budget.
+- Surface as a UX error with no path to recovery.
+- Leak a partial trace that triggers an alert at 03:00.
+- Most insidiously: poison the agent's memory if the framework has memory.
+
+## The real shape: bounded, idempotent, replay-able
+
+The mental model `scaling-succotash` enforces is:
+
+1. **Every step is a Celery task** — this gives us retries, time limits, dead-letter queues, and visibility for free.
+2. **Every task is idempotent** — keyed by `(user_session_id, step_idx, input_hash)`. Two retries do the same work, never double-charge a tool.
+3. **State lives in Postgres + Redis**, never in agent memory. Memory is a derived view.
+4. **Cross-task control flow is LangGraph**, not Python control flow. Graph edges are inspectable; `if/else` chains are not.
+
+A representative orchestrator node (Python, simplified):
+
+```python
+from celery import Celery, Task
+from langgraph.graph import StateGraph
+
+app = Celery("succotash", broker=REDIS_URL, backend=POSTGRES_URL)
+
+class IdempotentTask(Task):
+    """Every Celery task in succotash inherits from this base.
+    The contract: same idempotency_key → same result, no side effects on retry."""
+
+    autoretry_for = (TransientError,)
+    retry_backoff = True
+    retry_backoff_max = 30
+    retry_kwargs = {"max_retries": 4}
+    acks_late = True
+
+    def __call__(self, *args, **kwargs):
+        key = self._idempotency_key(*args, **kwargs)
+        cached = result_store.get(key)
+        if cached is not None:
+            return cached
+        result = self.run(*args, **kwargs)
+        result_store.put(key, result, ttl=24 * 3600)
+        return result
+
+@app.task(base=IdempotentTask, time_limit=12, soft_time_limit=10)
+def graphrag_search(query: str, session_id: str, step_idx: int) -> dict:
+    """One step of the agentic graph. Bounded, idempotent, replay-safe."""
+    with circuit_breaker(name="graphrag_search", failure_threshold=5):
+        nodes = vector_store.knn(query=query, k=20)
+        graph_walk = neo4j.expand(nodes, hops=2, max_nodes=200)
+        return {"nodes": nodes, "graph_walk": graph_walk}
+```
+
+Three things here are non-negotiable:
+
+- `time_limit` and `soft_time_limit` — agents have to fail fast when a tool hangs.
+- `acks_late=True` — Celery only acks after the worker successfully completes. A pod eviction mid-task means the message goes back to the queue, not to `/dev/null`.
+- `circuit_breaker(...)` — if `graphrag_search` fails 5 times in a row, we trip and route around it for 60 seconds rather than burning every user's budget.
+
+## The Kubernetes substrate
+
+The platform underneath is deliberately boring:
+
+- **`Deployment`** for stateless workers (Celery, the API gateway). Horizontal autoscaling on queue depth.
+- **`StatefulSet`** for Postgres replicas and the vector store. PVCs survive pod restarts; pod identity is stable for the orchestrator.
+- **`HorizontalPodAutoscaler`** keyed off Celery queue depth, not CPU. CPU is a lagging indicator for an I/O-bound agent fleet.
+- **GitOps via Flux** — every config change is a PR. No `kubectl apply -f` from a laptop. Rollback is `git revert`.
+
+If this list looks unremarkable, that is the point. The agent is the interesting layer to a non-engineer; the _boring_ layer is what makes the agent reliable to the engineer.
+
+## What a circuit breaker is actually for
+
+Worth dwelling on. A circuit breaker is _not_ a retry policy. A retry asks "did this call succeed?" — a circuit breaker asks "is this call worth attempting at all right now?" The former optimises a single request; the latter protects the entire fleet.
+
+In agentic systems where each request can fan out into 6–12 tool calls, an upstream brownout — with naive retries — can saturate your worker pool and DOS yourself. The breaker says: "we know graphrag is sad, take the degraded path." The degraded path might be "no retrieval, just generate from priors" — worse output, but a returned 200 instead of a 504 cascade.
+
+## The Staff+ takeaway
+
+If your agentic system does not have an SLO, retries that respect that SLO, idempotency keys, dead-letter queues, and a story for partial degradation, **you do not have a system** — you have a notebook waiting to be paged. The LLM is the input, not the architecture.
+
+The job, again, is the plumbing.
+
+---
+
+_Anchored to: scaling-succotash, an open-source agentic search engine ([github.com/suryaavala/scaling-succotash](https://github.com/suryaavala/scaling-succotash)). The architectural patterns generalise; the code in this post is illustrative._

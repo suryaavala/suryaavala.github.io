@@ -1,0 +1,11 @@
+{
+  "name": "Surya Avala — Personal Architecture Platform",
+  "short_name": "suryaavala.com",
+  "description": "Principal AI Systems Architect · Staff ML Engineer · Engineering Leader",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "icons": [{ "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" }]
+}

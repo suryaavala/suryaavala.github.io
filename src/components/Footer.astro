@@ -1,0 +1,75 @@
+---
+/**
+ * Site footer — minimal, link-dense, signal-first.
+ *
+ * Mirrors the contact matrix from spec §4.6 in compact form, plus build
+ * metadata (last build = static SSG render time injected at compile).
+ */
+
+const buildYear = new Date().getFullYear();
+// Astro injects this at build time; falls back gracefully in dev.
+const lastBuilt = new Date().toISOString().slice(0, 10);
+
+const channels: { label: string; href: string; rel?: string }[] = [
+  { label: 'GitHub', href: 'https://github.com/suryaavala', rel: 'me noopener' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/suryaavala', rel: 'me noopener' },
+  { label: 'Email', href: 'mailto:suryaavinashavala@gmail.com', rel: 'me' },
+  { label: 'Sponsors', href: 'https://github.com/sponsors/suryaavala', rel: 'noopener' },
+  { label: 'RSS', href: '/rss.xml' }
+];
+---
+
+<footer
+  class="border-t border-border-base/60 bg-bg-base/40"
+  role="contentinfo"
+  aria-label="Site footer"
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="grid gap-8 md:grid-cols-3">
+      <div>
+        <p class="font-mono text-sm text-text-primary">
+          <span class="text-brand">~/</span>suryaavala<span class="text-text-muted">.com</span>
+        </p>
+        <p class="mt-2 max-w-sm text-sm text-text-muted">
+          Staff Machine Learning Engineer · Principal AI Systems Architect. Healthcare · Energy ·
+          Finance · Tech.
+        </p>
+        <p class="mt-1 max-w-sm text-xs text-text-muted">
+          AI for Social Good · Climate Action · Rational Thinking
+        </p>
+      </div>
+
+      <nav aria-label="Footer contact channels">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-text-muted">/ping</h2>
+        <ul class="mt-3 grid grid-cols-2 gap-2 font-mono text-sm" role="list">
+          {
+            channels.map(({ label, href, rel }) => (
+              <li>
+                <a
+                  href={href}
+                  rel={rel}
+                  class="text-text-primary underline decoration-text-muted/30 underline-offset-4 hover:text-brand hover:decoration-brand"
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="font-mono text-xs uppercase tracking-widest text-text-muted">/build</h2>
+        <p class="mt-3 font-mono text-sm text-text-primary">
+          <span class="text-status">●</span> Static · Astro v4 · Zero JS default
+        </p>
+        <p class="mt-1 font-mono text-xs text-text-muted">
+          last built <time datetime={lastBuilt}>{lastBuilt}</time>
+        </p>
+        <p class="mt-1 font-mono text-xs text-text-muted">
+          © {buildYear} Surya Avala · MIT for code, CC-BY for prose
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

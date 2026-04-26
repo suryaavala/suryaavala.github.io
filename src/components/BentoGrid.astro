@@ -1,0 +1,28 @@
+---
+/**
+ * Bento grid container (spec §4.1).
+ *
+ * Desktop  (≥1024px): 4-column asymmetric grid, fluid auto-rows.
+ * Tablet   (≥768px):  2-column grid; child spans use `md:` overrides.
+ * Mobile   (<768px):  single column. Spec mandates only the top 4 cards above
+ *                     the fold, with the rest collapsed inside `<details>` —
+ *                     that progressive disclosure is owned by the parent page,
+ *                     not the grid container.
+ */
+
+export interface Props {
+  /** Optional aria label for the section landmark. */
+  ariaLabel?: string;
+}
+
+const { ariaLabel = 'Site overview' } = Astro.props;
+---
+
+<section aria-label={ariaLabel} class="w-full">
+  <div
+    class="grid w-full grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+    style="grid-auto-rows: minmax(220px, auto);"
+  >
+    <slot />
+  </div>
+</section>

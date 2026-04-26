@@ -1,0 +1,37 @@
+---
+/**
+ * Schema.org Person JSON-LD block (spec §5.2).
+ *
+ * Sourced verbatim from spec — keep in sync with persona/README so that
+ * Google's structured-data tester reflects the exact same identity surface.
+ */
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Surya Avala',
+  jobTitle: 'Staff Machine Learning Engineer & Principal AI Systems Architect',
+  description:
+    'A decade of making ML systems survive production in healthcare and energy — where the plumbing matters more than the model.',
+  knowsAbout: [
+    'Machine Learning Engineering',
+    'MLOps',
+    'GenAI',
+    'Multi-Agent Systems',
+    'Distributed Systems',
+    'Healthcare AI',
+    'Energy Forecasting',
+    'Causal Inference',
+    'Kubernetes',
+    'Privacy-by-Design',
+    'Recommender Systems',
+    'Clinical NLP',
+    'FinOps'
+  ],
+  alumniOf: { '@type': 'Organization', name: 'UNSW Sydney' },
+  url: 'https://suryaavala.com',
+  sameAs: ['https://github.com/suryaavala', 'https://linkedin.com/in/suryaavala']
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(person)} />

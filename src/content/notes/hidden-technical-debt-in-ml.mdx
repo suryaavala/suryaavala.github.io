@@ -1,0 +1,99 @@
+---
+title: 'Hidden Technical Debt in Machine Learning'
+publishDate: 2026-04-15
+description: 'Why elegant theoretical data science requires massive infrastructure to scale safely — lessons from the Montu GCP ML Platform.'
+tags: ['MLOps', 'Technical Debt', 'Kubernetes', 'Architecture']
+category: 'Distributed Systems'
+commercialContext: 'Lessons from the Montu GCP ML Platform (67% ↓ lead times)'
+isDraft: false
+requiresMath: true
+---
+
+> _"Less than 5% of any production ML system is the model itself. The remaining 95% is plumbing — and the plumbing is the part that fails."_ — Sculley et al., NeurIPS 2015, paraphrased
+
+This post is the field-engineer's gloss on Sculley's _Hidden Technical Debt in Machine Learning Systems_, viewed through the lens of a healthcare-grade GCP platform that ultimately delivered a **67% reduction in feature lead times** post-migration. The numbers came after the plumbing — never before.
+
+## The cost equation everyone gets wrong
+
+The naive view of an ML feature's cost looks like this:
+
+$$
+C_{\text{naive}} = C_{\text{model}} + C_{\text{deploy}}
+$$
+
+Reality, in any regulated domain, is closer to:
+
+$$
+C_{\text{realised}} = C_{\text{model}} + \sum_{i} C_{\text{integration}_i} + C_{\text{compliance}} + C_{\text{drift-monitoring}} + \int_{0}^{T} C_{\text{ops}}(t) \, dt
+$$
+
+Where `T` is the mean lifetime of the feature in production. The integral term — operational cost over time — is what kills inexperienced platforms. It is also what no offline notebook captures.
+
+## The Kubeflow + GitOps move
+
+The platform consolidation at Montu had three load-bearing decisions:
+
+1. **Single source of truth for pipelines** — Kubeflow Pipelines on GKE, with every pipeline definition committed to Git. No notebook-driven jobs. No "I'll just kick this off from my laptop" RCAs.
+2. **DVC for data lineage** — every model version maps to a hash of its training data. Drift bisection becomes `git bisect` for ML.
+3. **Privacy-by-Design logging** — clinical PII never leaves the boundary. Sanitisation happens at the producer side via a pre-vetted redactor (target: F1 ≥ 0.87).
+
+A representative pipeline node:
+
+```python
+# kubeflow_pipelines/clinical_redactor.py
+from kfp import dsl
+
+@dsl.component(
+    base_image="gcr.io/montu/clinical-redactor:0.4.2",
+)
+def redact_clinical_logs(input_uri: str, output_uri: str) -> dict:
+    """
+    Redact PII from clinical logs before any downstream ML pipeline touches them.
+    Returns micro-averaged F1 against held-out clinician-annotated PII corpus.
+    Pipeline halts if F1 < 0.87 (compliance contract, not just a metric).
+    """
+    from clinical_redactor import Redactor
+
+    redactor = Redactor(model="bio_clinical_bert_redactor_v0.4.2")
+    f1 = redactor.run(input_uri=input_uri, output_uri=output_uri)
+
+    if f1 < 0.87:
+        raise RuntimeError(f"Redaction F1 {f1:.3f} below contract floor 0.87")
+
+    return {"f1": f1, "input_uri": input_uri, "output_uri": output_uri}
+```
+
+Note what this code is _not_ doing: it is not training a model. It is enforcing an invariant — and most of the platform's actual code looks like this. The "ML" in MLOps is the smallest fraction of the codebase.
+
+## DORA after the dust settles
+
+Six months post-migration, DORA metrics looked like:
+
+| Metric               | Pre-platform | Post-platform | Delta         |
+| -------------------- | ------------ | ------------- | ------------- |
+| Lead time for change | 4–6 weeks    | 1–2 weeks     | **−67%**      |
+| Change failure rate  | ~12%         | &lt;1%        | **−97%+**     |
+| Mean time to restore | hours–days   | &lt;1 hour    | step-function |
+| Deployment frequency | weekly       | multi-daily   | step-function |
+
+Ascribe the wins to "Kubeflow" if you want, but the real cause is the constraint: **every change is reviewed, typed, lineage-traced, redaction-checked, and rollback-able**. Kubeflow is the machine that enforces the constraint. The constraint is the platform.
+
+## Where the integral bites
+
+Cost-over-time is brutal in ML because:
+
+- **Data drift is silent** until the F1 cliff.
+- **Model drift compounds** with data drift (covariate shift × label shift).
+- **Compliance regimes change** (e.g., new TGA guidance) — your platform must either absorb the change without re-architecting, or it accumulates "compliance debt" that someone, eventually, pays in cash.
+
+A platform optimised for offline F1 will lose. A platform optimised for the integral wins.
+
+## The takeaway for Staff+ readers
+
+If you are Staff or Principal-level on an ML platform team, the only honest question is: **what does the operational cost integral look like in 18 months?** Everything else — model architecture, framework choice, even cloud vendor — is downstream of that question.
+
+Optimise the plumbing. The model will follow.
+
+---
+
+_Anchored to: Montu Clinical ML Platform, 2023–present. Numbers from internal DORA dashboard, validated by Platform Engineering and Compliance._
